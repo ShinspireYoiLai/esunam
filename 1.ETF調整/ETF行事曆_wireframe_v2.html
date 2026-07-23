@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>玉山投信官網｜ETF行事曆 Wireframe</title>
+<style>
+:root{
+  --green:#00A19B;        /* 玉山綠（強調色，僅用於重點） */
+  --green-dark:#00726E;
+  --green-tint:#E6F6F5;
+  --ink:#333B40;
+  --gray:#8A939B;
+  --line:#DDE2E6;
+  --ph:#EDF0F2;           /* wireframe 佔位灰 */
+  --ph-line:#C9D1D7;
+  --red:#D0342C;
+  --amber:#E8620C;
+  --gold:#8C6D3F;         /* 配息基準日 */
+  --gold-dark:#6E5530;
+  --teal:#1F7873;         /* 配息發放日 */
+  --teal-dark:#155C58;
+  --teal-light:#4FA6A0;   /* 暫停計價日 */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",sans-serif;
+  color:var(--ink);background:#FAFBFC;line-height:1.6}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* wireframe 佔位樣式 */
+.ph{background:var(--ph);border:1px dashed var(--ph-line);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:13px}
+
+.new-tag{display:inline-block;background:var(--amber);color:#fff;font-size:11px;font-weight:700;
+  padding:1px 9px;border-radius:999px;vertical-align:2px;margin-left:8px;letter-spacing:1px}
+
+.demo-bar{background:#FFF7EF;border-bottom:1px solid #F1DCC5;color:var(--amber);
+  font-size:12.5px;text-align:center;padding:5px 12px}
+
+/* ===== Header（既有，沿用全站樣式） ===== */
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
+.hd{display:flex;align-items:center;gap:26px;height:60px}
+.logo{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:800;color:var(--green);white-space:nowrap}
+.logo .mt{width:26px;height:22px;background:var(--green);
+  clip-path:polygon(50% 0,100% 100%,0 100%);border-radius:2px}
+nav{display:flex;gap:24px;flex:1}
+nav a{font-size:14.5px;padding:4px 0;border-bottom:2px solid transparent}
+nav a:hover{color:var(--green);border-bottom-color:var(--green)}
+nav a.cur{color:var(--green);border-bottom-color:var(--green);font-weight:700}
+.hd-right{display:flex;align-items:center;gap:12px}
+.sicon{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:#fff;
+  color:var(--gray);display:flex;align-items:center;justify-content:center}
+.btn-trade{background:var(--green);color:#fff;font-size:13.5px;font-weight:700;border:none;
+  padding:8px 20px;border-radius:999px}
+.btn-trade:hover{background:var(--green-dark)}
+
+/* ===== ETF專區次導覽（套用 ETF/index 樣式，既有） ===== */
+.subnav{background:var(--green-tint);border-bottom:1px solid var(--line)}
+.subnav .tabs2{display:flex;gap:26px;font-size:13.5px;color:var(--green-dark)}
+.subnav .tabs2 a{padding:10px 2px;border-bottom:2px solid transparent}
+.subnav .tabs2 a:hover{border-bottom-color:var(--green-dark)}
+.subnav .tabs2 a.cur{font-weight:800;border-bottom-color:var(--green-dark)}
+
+/* ===== 頁面版頭 Banner（套用 ETF/index 樣式） ===== */
+.banner{padding:20px 0 0}
+.banner .ph{height:150px;border-radius:12px}
+
+/* ===== 標題區 ===== */
+.title-sec{padding:22px 0 4px}
+.breadcrumb{font-size:12px;color:var(--gray);margin-bottom:8px}
+.breadcrumb span{margin:0 4px}
+.title-sec h1{font-size:26px;font-weight:800;display:inline-flex;align-items:center}
+.title-sec .desc{font-size:13.5px;color:var(--gray);margin-top:8px;max-width:640px}
+
+/* ===== 區塊通用 ===== */
+section.blk{padding:26px 0 8px}
+.blk-hd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap}
+.blk-hd h2{font-size:18px;font-weight:800}
+.blk-desc{font-size:13px;color:var(--gray);margin-bottom:16px}
+
+/* ===== 篩選卡片 ===== */
+.filter-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 24px}
+.filter-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.filter-label{font-size:14px;font-weight:800;color:var(--ink);margin-right:6px}
+.f-chip{background:#fff;border:1.5px solid var(--line);color:var(--ink);font-size:13px;
+  padding:7px 18px;border-radius:999px;font-weight:700}
+.f-chip.chip-gold{border-color:var(--gold)}
+.f-chip.chip-teal{border-color:var(--teal)}
+.f-chip.chip-teal-light{border-color:var(--teal-light)}
+.f-chip.chip-gold.active{background:var(--gold);color:#fff}
+.f-chip.chip-teal.active{background:var(--teal);color:#fff}
+.f-chip.chip-teal-light.active{background:var(--teal-light);color:#fff}
+.btn-search{margin-left:auto;background:var(--green);color:#fff;font-size:14px;font-weight:700;
+  border:none;padding:9px 28px;border-radius:8px}
+.btn-search:hover{background:var(--green-dark)}
+
+/* ===== 月曆＋當日明細 版面 ===== */
+.cal-layout{display:flex;align-items:flex-start;gap:20px;margin-top:16px}
+
+/* ===== 月曆卡片 ===== */
+.cal-card{flex:1;min-width:0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px 26px}
+.cal-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.cal-nav .arrow{width:30px;height:30px;border:1px solid var(--line);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:var(--gray);font-weight:700;flex-shrink:0}
+.btn-today{background:var(--teal-light);color:#fff;border:none;border-radius:8px;
+  padding:8px 18px;font-size:13px;font-weight:700}
+.btn-today:hover{background:var(--teal)}
+.sel-ym{border:1px solid var(--line);border-radius:6px;padding:7px 10px;font-size:13px;
+  color:var(--ink);background:#fff}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-head{font-size:12px;text-align:center;color:var(--gray);padding-bottom:6px;font-weight:700}
+.cal-cell{min-height:76px;border:1px solid var(--line);border-radius:8px;font-size:12px;
+  padding:7px;display:flex;flex-direction:column;gap:4px;position:relative}
+.cal-cell.dim{color:var(--gray);background:#FBFBFC}
+.cal-cell.today{background:#EDF2F6;border-color:#C7D6E0}
+.cal-cell.selected{border:1.5px solid var(--gold);box-shadow:0 3px 8px rgba(0,0,0,.08)}
+.cal-cell .dnum{color:var(--ink);font-weight:700}
+.cal-cell.dim .dnum{color:var(--gray)}
+.event-tag{display:inline-block;font-size:10.5px;font-weight:700;color:#fff;
+  border-radius:999px;padding:2px 8px;line-height:1.5;align-self:flex-start}
+.event-tag.tag-gold{background:var(--gold)}
+.event-tag.tag-teal{background:var(--teal)}
+.event-tag.tag-teal-light{background:var(--teal-light)}
+.legend-row{display:flex;gap:20px;margin-top:16px;font-size:12.5px;color:var(--ink);flex-wrap:wrap}
+.legend-row .item{display:flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.dot-gold{background:var(--gold)}
+.dot-teal{background:var(--teal)}
+.dot-teal-light{background:var(--teal-light)}
+
+/* ===== 當日明細側欄 ===== */
+.day-panel{width:300px;flex-shrink:0;background:#fff;border:1px solid var(--line);
+  border-radius:12px;padding:20px 22px;max-height:600px;overflow-y:auto}
+.day-panel-date{font-size:15px;font-weight:800;color:var(--ink);padding-bottom:12px;
+  border-bottom:2px solid var(--gold);margin-bottom:14px}
+.day-panel h3{font-size:14px;font-weight:800;color:var(--teal-dark);margin-bottom:10px}
+.day-panel-cat{font-size:12.5px;font-weight:700;color:var(--ink);margin:12px 0 6px}
+.fund-list{list-style:none}
+.fund-list li{padding:7px 0;font-size:12.5px;border-bottom:1px solid #F2F4F6}
+.fund-list li a{color:var(--teal-dark)}
+.fund-list li a:hover{text-decoration:underline}
+
+/* ===== 補充說明 ===== */
+.notes{font-size:12.5px;color:var(--gray);margin-top:14px;padding-left:18px}
+.notes li{margin-bottom:5px}
+
+/* ===== 快捷功能列（既有） ===== */
+.quick{padding:20px 0 4px}
+.quick-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.q-item{background:#fff;border:1px solid var(--line);border-radius:10px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px;font-size:13px}
+.q-item:hover{border-color:var(--green);color:var(--green)}
+.q-item.cur{border-color:var(--green);background:var(--green-tint);color:var(--green-dark);font-weight:700}
+.q-item .c{width:40px;height:40px;border-radius:50%;background:var(--ph);border:1px dashed var(--ph-line)}
+
+/* ===== 既有內容佔位 ===== */
+.exist{padding:34px 0}
+.exist .ph{height:110px}
+.exist h2{font-size:18px;font-weight:800;margin-bottom:12px;color:var(--gray)}
+
+/* ===== Footer（既有） ===== */
+footer{background:#fff;border-top:1px solid var(--line);padding:30px 0;margin-top:20px}
+footer .ph{height:90px}
+footer p{font-size:11.5px;color:#AEB6BD;margin-top:14px;line-height:1.7}
+
+@media (max-width:900px){
+  nav{display:none}
+  .quick-grid{grid-template-columns:repeat(3,1fr)}
+  .cal-layout{flex-direction:column}
+  .day-panel{width:100%;max-height:none}
+  .cal-grid{gap:3px}
+  .cal-cell{min-height:52px;font-size:10.5px;padding:4px}
+  .event-tag{font-size:9px;padding:1px 6px}
+}
+</style>
+</head>
+<body>
+
+<div class="demo-bar"><b>Wireframe</b>｜ETF行事曆頁面線框示意，灰色虛線區塊為既有內容佔位，日期與事件僅供示意，非最終視覺樣式</div>
+
+<!-- Header（既有，沿用全站樣式） -->
+<header>
+  <div class="wrap hd">
+    <a class="logo" href="#"><span class="mt"></span>玉山投信</a>
+    <nav>
+      <a href="#">基金中心</a><a href="#" class="cur">ETF專區</a><a href="#">投資觀點</a>
+      <a href="#">客戶服務</a><a href="#">關於我們</a><a href="#">玉山服務網</a>
+    </nav>
+    <div class="hd-right">
+      <div class="sicon">⌕</div>
+      <button class="btn-trade">線上交易</button>
+    </div>
+  </div>
+</header>
+
+<!-- ETF專區次導覽（套用 ETF/index 樣式，既有） -->
+<div class="subnav">
+  <div class="wrap">
+    <div class="tabs2">
+      <a href="#">ETF首頁</a><a href="#">ETF總覽</a><a href="#">即時預估淨值</a>
+      <a href="#" class="cur">ETF行事曆</a><a href="#">配息資訊</a><a href="#">市場研究</a><a href="#">客戶服務</a>
+    </div>
+  </div>
+</div>
+
+<!-- 頁面版頭 Banner（套用 ETF/index 樣式，既有內容佔位） -->
+<div class="banner">
+  <div class="wrap">
+    <div class="ph">ETF專區主視覺 Banner（套用 ETF/index 版頭樣式，既有）</div>
+  </div>
+</div>
+
+<!-- 標題區 -->
+<div class="title-sec">
+  <div class="wrap">
+    <div class="breadcrumb">首頁<span>›</span>ETF專區<span>›</span>ETF行事曆</div>
+    <h1>ETF行事曆<span class="new-tag">NEW</span></h1>
+    <p class="desc">掌握玉山投信ETF系列配息基準日、發放日及暫停計價日曆，提前規劃您的ETF投資佈局。</p>
+  </div>
+</div>
+
+<!-- 事件類別篩選 -->
+<section class="blk">
+  <div class="wrap">
+    <div class="blk-hd"><h2>事件類別篩選</h2></div>
+    <div class="blk-desc">點選事件類別即可切換月曆顯示範圍，點選「查詢」套用篩選條件</div>
+    <div class="filter-card">
+      <div class="filter-row">
+        <span class="filter-label">事件類別</span>
+        <button class="f-chip chip-gold active">✓ 配息基準日</button>
+        <button class="f-chip chip-teal active">✓ 配息發放日</button>
+        <button class="f-chip chip-teal-light active">✓ 暫停計價日</button>
+        <button class="btn-search">查詢</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 月曆檢視 -->
+<section class="blk">
+  <div class="wrap">
+    <div class="blk-hd"><h2>行事曆檢視</h2></div>
+    <div class="blk-desc">點選月曆日期，右側面板顯示當日各基金事件明細</div>
+
+    <div class="cal-layout">
+      <!-- 月曆卡片 -->
+      <div class="cal-card">
+        <div class="cal-nav">
+          <div class="arrow">‹</div>
+          <button class="btn-today">今日</button>
+          <select class="sel-ym"><option>2026</option></select>
+          <select class="sel-ym"><option>07</option></select>
+          <div class="arrow">›</div>
+        </div>
+        <div class="cal-grid">
+          <div class="cal-head">日</div><div class="cal-head">一</div><div class="cal-head">二</div>
+          <div class="cal-head">三</div><div class="cal-head">四</div><div class="cal-head">五</div><div class="cal-head">六</div>
+        </div>
+        <div class="cal-grid" style="margin-top:6px">
+          <!-- 第1週：6/28 - 7/4 -->
+          <div class="cal-cell dim"><span class="dnum">28</span></div>
+          <div class="cal-cell dim"><span class="dnum">29</span><span class="event-tag tag-gold">配息基準日</span></div>
+          <div class="cal-cell dim"><span class="dnum">30</span><span class="event-tag tag-gold">配息基準日</span></div>
+          <div class="cal-cell"><span class="dnum">1</span><span class="event-tag tag-teal-light">暫停計價日</span></div>
+          <div class="cal-cell"><span class="dnum">2</span></div>
+          <div class="cal-cell"><span class="dnum">3</span><span class="event-tag tag-teal-light">暫停計價日</span></div>
+          <div class="cal-cell"><span class="dnum">4</span></div>
+
+          <!-- 第2週：7/5 - 7/11 -->
+          <div class="cal-cell"><span class="dnum">5</span></div>
+          <div class="cal-cell"><span class="dnum">6</span></div>
+          <div class="cal-cell"><span class="dnum">7</span></div>
+          <div class="cal-cell"><span class="dnum">8</span></div>
+          <div class="cal-cell"><span class="dnum">9</span></div>
+          <div class="cal-cell selected"><span class="dnum">10</span><span class="event-tag tag-teal-light">暫停計價日</span></div>
+          <div class="cal-cell"><span class="dnum">11</span></div>
+
+          <!-- 第3週：7/12 - 7/18 -->
+          <div class="cal-cell"><span class="dnum">12</span></div>
+          <div class="cal-cell"><span class="dnum">13</span></div>
+          <div class="cal-cell"><span class="dnum">14</span></div>
+          <div class="cal-cell"><span class="dnum">15</span></div>
+          <div class="cal-cell"><span class="dnum">16</span></div>
+          <div class="cal-cell"><span class="dnum">17</span></div>
+          <div class="cal-cell"><span class="dnum">18</span></div>
+
+          <!-- 第4週：7/19 - 7/25 -->
+          <div class="cal-cell"><span class="dnum">19</span></div>
+          <div class="cal-cell today"><span class="dnum">20</span></div>
+          <div class="cal-cell"><span class="dnum">21</span></div>
+          <div class="cal-cell"><span class="dnum">22</span></div>
+          <div class="cal-cell"><span class="dnum">23</span></div>
+          <div class="cal-cell"><span class="dnum">24</span></div>
+          <div class="cal-cell"><span class="dnum">25</span></div>
+
+          <!-- 第5週：7/26 - 8/1 -->
+          <div class="cal-cell"><span class="dnum">26</span></div>
+          <div class="cal-cell"><span class="dnum">27</span></div>
+          <div class="cal-cell"><span class="dnum">28</span></div>
+          <div class="cal-cell"><span class="dnum">29</span></div>
+          <div class="cal-cell"><span class="dnum">30</span><span class="event-tag tag-gold">配息基準日</span></div>
+          <div class="cal-cell"><span class="dnum">31</span><span class="event-tag tag-gold">配息基準日</span></div>
+          <div class="cal-cell dim"><span class="dnum">1</span></div>
+
+          <!-- 第6週：8/2 - 8/8 -->
+          <div class="cal-cell dim"><span class="dnum">2</span></div>
+          <div class="cal-cell dim"><span class="dnum">3</span><span class="event-tag tag-teal-light">暫停計價日</span></div>
+          <div class="cal-cell dim"><span class="dnum">4</span></div>
+          <div class="cal-cell dim"><span class="dnum">5</span></div>
+          <div class="cal-cell dim"><span class="dnum">6</span></div>
+          <div class="cal-cell dim"><span class="dnum">7</span></div>
+          <div class="cal-cell dim"><span class="dnum">8</span></div>
+        </div>
+        <div class="legend-row">
+          <div class="item"><span class="dot dot-gold"></span>配息基準日</div>
+          <div class="item"><span class="dot dot-teal"></span>配息發放日</div>
+          <div class="item"><span class="dot dot-teal-light"></span>暫停計價日</div>
+        </div>
+        <ul class="notes">
+          <li>各ETF相關配息資訊請至【配息資訊】單元查詢。</li>
+          <li>暫停計價日、交易日以臺灣證券交易所／證券櫃檯買賣中心公告為準，如有異動將另行公告通知。</li>
+        </ul>
+      </div>
+
+      <!-- 當日明細側欄 -->
+      <aside class="day-panel">
+        <div class="day-panel-date">7月10日(五)</div>
+        <h3>境內基金</h3>
+        <div class="day-panel-cat">暫停計價基金：</div>
+        <ul class="fund-list">
+          <li><a href="#">玉山高成長基金(原PGIM保德信高成長基金)</a></li>
+          <li><a href="#">玉山金滿意基金(原PGIM保德信金滿意基金)</a></li>
+          <li><a href="#">玉山店頭市場基金(原PGIM保德信店頭市場基金)</a></li>
+          <li><a href="#">玉山科技島基金(原PGIM保德信科技島基金)</a></li>
+          <li><a href="#">玉山貨幣市場基金(原PGIM保德信貨幣市場基金)</a></li>
+          <li><a href="#">玉山瑞騰基金(原PGIM保德信瑞騰基金)</a></li>
+          <li><a href="#">玉山金平衡基金(原PGIM保德信金平衡基金)</a></li>
+          <li><a href="#">玉山大中華基金(原PGIM保德信大中華基金)</a></li>
+        </ul>
+      </aside>
+    </div>
+
+  </div>
+</section>
+
+<!-- 快捷功能列（既有樣式，項目改為ETF對應功能） -->
+<div class="quick">
+  <div class="wrap quick-grid">
+    <a class="q-item" href="#"><span class="c"></span>立即交易</a>
+    <a class="q-item" href="#"><span class="c"></span>線上預約開戶</a>
+    <a class="q-item" href="#"><span class="c"></span>ETF淨值</a>
+    <a class="q-item" href="#"><span class="c"></span>訂閱電子報</a>
+    <a class="q-item cur" href="#"><span class="c"></span>ETF行事曆</a>
+  </div>
+</div>
+
+<!-- 既有內容佔位 -->
+<section class="exist">
+  <div class="wrap">
+    <h2>法規揭露／相關連結（既有）</h2>
+    <div class="ph">既有內容區塊佔位</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="ph">Footer 網站導覽／聯絡資訊（既有）</div>
+    <p>本頁為系統改版之前台功能線框示意，所有日期與事件內容僅供版面示意，實際內容以正式網站公告為準。</p>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.f-chip').forEach(chip=>{
+  chip.addEventListener('click',()=>chip.classList.toggle('active'));
+});
+document.querySelectorAll('.cal-cell:not(.dim)').forEach(cell=>{
+  cell.addEventListener('click',()=>{
+    document.querySelectorAll('.cal-cell.selected').forEach(c=>c.classList.remove('selected'));
+    cell.classList.add('selected');
+  });
+});
+</script>
+</body>
+</html>

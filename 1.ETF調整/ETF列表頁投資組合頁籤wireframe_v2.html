@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>玉山投信ETF專區｜ETF列表頁新增產業別／國家別篩選 Wireframe</title>
+<style>
+:root{
+  --green:#00A19B;
+  --green-dark:#00726E;
+  --green-tint:#E6F6F5;
+  --ink:#333B40;
+  --gray:#8A939B;
+  --line:#DDE2E6;
+  --ph:#EDF0F2;
+  --ph-line:#C9D1D7;
+  --red:#D0342C;
+  --up:#D0342C;
+  --down:#1C8A4B;
+  --amber:#E8620C;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",sans-serif;
+  color:var(--ink);background:#FAFBFC;line-height:1.6}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.ph{background:var(--ph);border:1px dashed var(--ph-line);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:13px}
+.new-tag{display:inline-block;background:var(--amber);color:#fff;font-size:11px;font-weight:700;
+  padding:1px 9px;border-radius:999px;vertical-align:2px;margin-left:8px;letter-spacing:1px}
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
+.hd{display:flex;align-items:center;gap:26px;height:60px}
+.logo{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:800;color:var(--green);white-space:nowrap}
+.logo .mt{width:26px;height:22px;background:var(--green);
+  clip-path:polygon(50% 0,100% 100%,0 100%);border-radius:2px}
+nav{display:flex;gap:24px;flex:1}
+nav a{font-size:14.5px;padding:4px 0;border-bottom:2px solid transparent}
+nav a:hover{color:var(--green);border-bottom-color:var(--green)}
+nav a.cur{color:var(--green);border-bottom-color:var(--green);font-weight:700}
+.hd-right{display:flex;align-items:center;gap:12px}
+.sicon{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:#fff;
+  color:var(--gray);display:flex;align-items:center;justify-content:center}
+.btn-trade{background:var(--green);color:#fff;font-size:13.5px;font-weight:700;border:none;
+  padding:8px 20px;border-radius:999px}
+.btn-trade:hover{background:var(--green-dark)}
+.crumb{font-size:12.5px;color:var(--gray);padding:18px 0 4px}
+.crumb b{color:var(--ink)}
+.pagehd{padding:6px 0 18px;display:flex;align-items:center;justify-content:space-between}
+.pagehd h1{font-size:26px;font-weight:800}
+
+.etf-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px 26px 18px;margin-bottom:22px}
+.etf-card-top{display:flex;justify-content:flex-end;gap:10px;margin-bottom:6px}
+.icon-btn{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:#fff;
+  color:var(--gray);display:flex;align-items:center;justify-content:center;font-size:13px}
+.icon-btn:hover{border-color:var(--green);color:var(--green)}
+
+/* 篩選列（類別）層級收合：預設只顯示前兩個篩選類別，其餘收在「展開更多篩選條件」內 */
+.filter-row{display:flex;align-items:flex-start;gap:18px;padding:14px 0;border-bottom:1px solid #F0F2F4}
+.filter-row:first-of-type{padding-top:0}
+.filter-row:last-of-type{border-bottom:none}
+.flabel{width:96px;flex:0 0 96px;font-size:13.5px;font-weight:700;color:var(--ink);padding-top:6px}
+.fsub{font-size:11px;color:var(--gray);font-weight:400;margin-top:3px}
+
+.fchecks{display:flex;flex-wrap:wrap;gap:10px;flex:1}
+.fcheck{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;
+  color:var(--ink);font-size:13px;padding:8px 14px;border-radius:8px;cursor:pointer;transition:all .12s}
+.fcheck:hover{border-color:var(--green)}
+.fcheck input{width:15px;height:15px;accent-color:var(--green);cursor:pointer}
+.fcheck.checked{border-color:var(--green);background:var(--green-tint);color:var(--green-dark);font-weight:700}
+
+.filter-row.new .flabel{color:var(--green-dark)}
+.filter-row.new .fcheck.checked{border-color:var(--green-dark);background:#DFF3F1;color:var(--green-dark)}
+
+.rows-toggle-row{display:flex;justify-content:center;padding:14px 0 4px;border-bottom:1px solid #F0F2F4}
+.rows-toggle-btn{border:1px solid var(--line);background:#fff;color:var(--green-dark);font-size:13px;
+  font-weight:700;padding:8px 22px;border-radius:8px;display:inline-flex;align-items:center;gap:6px}
+.rows-toggle-btn:hover{border-color:var(--green)}
+
+.action-row{display:flex;align-items:center;gap:12px;padding-top:16px}
+.btn-clear{border:1px solid var(--line);background:#fff;color:var(--ink);font-size:13px;font-weight:700;
+  padding:9px 22px;border-radius:8px}
+.btn-clear:hover{border-color:var(--green);color:var(--green)}
+.btn-query{border:none;background:var(--green);color:#fff;font-size:13px;font-weight:700;
+  padding:9px 34px;border-radius:8px}
+.btn-query:hover{background:var(--green-dark)}
+.match-count{margin-left:auto;font-size:13px;color:var(--ink)}
+.match-count b{color:var(--green-dark);font-size:16px}
+
+.dl-row{display:flex;justify-content:flex-end;padding-top:12px}
+.dl-link{font-size:12.5px;color:var(--green-dark);font-weight:700;display:inline-flex;align-items:center;gap:5px}
+.dl-link:hover{text-decoration:underline}
+
+.tbl-wrap{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:10px}
+table.etbl{width:100%;border-collapse:collapse;font-size:13px}
+.etbl thead th{background:#F5F7F8;color:#5B6570;font-weight:700;text-align:center;
+  padding:12px 10px;font-size:12.5px;border-bottom:1px solid var(--line);white-space:nowrap}
+.etbl thead th:nth-child(2){text-align:left}
+.etbl tbody td{padding:14px 10px;text-align:center;border-bottom:1px solid #F0F2F4}
+.etbl tbody td:nth-child(2){text-align:left}
+.etbl tbody tr:last-child td{border-bottom:none}
+.etbl tbody tr.dim{opacity:.32}
+.etbl .code{color:var(--green-dark);font-weight:700}
+.etbl .up{color:var(--up);font-weight:700}
+.etbl .down{color:var(--down);font-weight:700}
+.etbl .fname{font-weight:600}
+.etbl .fnote{font-size:11px;color:var(--gray);display:block;margin-top:2px}
+
+/* 一覽表新增產業別標籤 */
+.ftags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tag-pill{background:var(--green-tint);color:var(--green-dark);font-size:11px;font-weight:700;
+  padding:3px 11px;border-radius:999px;white-space:nowrap}
+
+.legend-note{font-size:11.5px;color:var(--gray);padding:8px 4px 0}
+
+.exist{padding:36px 0}
+.exist .ph{height:120px}
+.exist h2{font-size:20px;font-weight:800;margin-bottom:14px;color:var(--gray)}
+footer{background:#fff;border-top:1px solid var(--line);padding:30px 0;margin-top:30px}
+footer .ph{height:90px}
+footer p{font-size:11.5px;color:#AEB6BD;margin-top:14px;line-height:1.7}
+@media (max-width:900px){
+  nav{display:none}
+  .filter-row{flex-direction:column;gap:6px}
+  .flabel{width:auto}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hd">
+    <a class="logo" href="#"><span class="mt"></span>玉山投信</a>
+    <nav>
+      <a href="#">基金中心</a><a href="#" class="cur">ETF專區</a><a href="#">投資觀點</a>
+      <a href="#">客戶服務</a><a href="#">關於我們</a>
+    </nav>
+    <div class="hd-right">
+      <div class="sicon">⌕</div>
+      <button class="btn-trade">線上交易</button>
+    </div>
+  </div>
+</header>
+<div class="wrap">
+  <div class="crumb">ETF專區　＞　<b>ETF列表</b></div>
+  <div class="pagehd"><h1>ETF列表</h1></div>
+
+  <div class="etf-card">
+    <div class="etf-card-top">
+      <div class="icon-btn" title="分享">⤴</div>
+      <div class="icon-btn" title="列印">🖶</div>
+    </div>
+
+    <div id="filterRowsWrap"></div>
+
+    <div class="rows-toggle-row">
+      <button class="rows-toggle-btn" id="rowsToggleBtn" onclick="toggleMoreRows()"></button>
+    </div>
+
+    <div class="action-row">
+      <button class="btn-clear" onclick="clearAll()">全部清除</button>
+      <button class="btn-query" onclick="applyQuery()">查詢</button>
+      <div class="match-count">符合條件 <b id="matchCount">0</b> 檔</div>
+    </div>
+
+    <div class="dl-row"><a class="dl-link" href="#">⬇ 下載一覽表</a></div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table class="etbl">
+      <thead>
+        <tr>
+          <th>證券代碼</th><th>基金名稱</th><th>ETF類型</th><th>日期 ⌄</th><th>淨值 ⌄</th><th>漲跌 ⌄</th><th>漲跌幅 ⌄</th>
+        </tr>
+      </thead>
+      <tbody id="etfRows"></tbody>
+    </table>
+  </div>
+  <div class="legend-note">產業別／國家別為新增篩選條件，用以縮小下方一覽表範圍；篩選類別預設收合僅顯示前兩項（配息頻率／ETF類型），可點擊「展開更多篩選條件」查看投資區域／產業別／國家別；篩選值皆改為可複選核取方塊；一覽表基金名稱下方新增產業別標籤示意。</div>
+</div>
+
+<section class="exist">
+  <div class="wrap">
+    <h2>投資觀點／市場訊息（既有，不變動）</h2>
+    <div class="ph">既有內容區塊佔位</div>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <div class="ph">Footer 網站導覽／聯絡資訊（既有，不變動）</div>
+    <p>本頁為ETF列表頁（/ETF/etf-list）新增「產業別」「國家別」篩選之前台功能線框示意。既有一覽表欄位維持不變；新增篩選為版面示意，實際產業／國家分類以公開說明書與成分股公告為準。</p>
+  </div>
+</footer>
+<script>
+const ETFS = [
+  { code:"009803", name:"玉山臺灣市值動能50 ETF基金", note:"（原PGIM保德信臺灣市值動能50 ETF基金）",
+    type:"股票型", region:"國內", freq:"季配型", date:"2026/07/16",
+    nav:"21.20", chg:"0.32", pct:"1.50%", up:true,
+    industry:"半導體業", country:"台灣", tags:["科技","半導體"] },
+  { code:"009810", name:"玉山全球跨國藍籌100 ETF基金", note:"（原PGIM保德信全球藍籌100 ETF基金）",
+    type:"股票型", region:"跨國", freq:"年配型", date:"2026/07/16",
+    nav:"11.35", chg:"0.05", pct:"0.44%", up:true,
+    industry:"資訊科技", country:"美國", tags:["科技","AI 人工智慧"] }
+];
+
+// 篩選類別定義：順序維持既有（配息頻率、ETF類型優先顯示），新增產業別／國家別排在後面
+const FILTER_DEFS = [
+  { key:"freq",     elId:"fFreq",     label:"配息頻率", isNew:false, options:["無","月配型","季配型","累積型","年配型"] },
+  { key:"type",     elId:"fType",     label:"ETF類型",  isNew:false, options:["股票型","債券型"] },
+  { key:"region",   elId:"fRegion",   label:"投資區域", isNew:false, options:["國內","跨國"] },
+  { key:"industry", elId:"fIndustry", label:"產業別",   isNew:true,  options:["半導體業","電子零組件業","資訊科技","金融","醫療保健","核心消費","其他"] },
+  { key:"country",  elId:"fCountry",  label:"國家別",   isNew:true,  options:["台灣","美國","日本","歐洲","其他"] },
+];
+
+// 篩選狀態：每個類別皆為可複選陣列，預設空陣列＝不限（全部顯示）
+const state = { freq:[], type:[], region:[], industry:[], country:[] };
+let rowsExpanded = false; // 類別層級收合：預設只顯示前兩個類別
+
+const VISIBLE_ROWS_DEFAULT = 2;
+
+function rFilterRows(){
+  const wrap = document.getElementById("filterRowsWrap");
+  const visibleDefs = rowsExpanded ? FILTER_DEFS : FILTER_DEFS.slice(0, VISIBLE_ROWS_DEFAULT);
+
+  wrap.innerHTML = visibleDefs.map(def=>{
+    const checksHtml = def.options.map(opt=>{
+      const checked = state[def.key].includes(opt);
+      return `<label class="fcheck${checked ? " checked" : ""}">
+        <input type="checkbox" ${checked ? "checked" : ""} onchange="toggleOption('${def.key}','${opt}')">
+        <span>${opt}</span>
+      </label>`;
+    }).join("");
+    return `<div class="filter-row${def.isNew ? " new" : ""}">
+      <div class="flabel">${def.label}${def.isNew ? '<span class="new-tag">NEW</span>' : ""}<div class="fsub">可複選</div></div>
+      <div class="fchecks">${checksHtml}</div>
+    </div>`;
+  }).join("");
+
+  const hiddenCount = FILTER_DEFS.length - VISIBLE_ROWS_DEFAULT;
+  const toggleBtn = document.getElementById("rowsToggleBtn");
+  toggleBtn.textContent = rowsExpanded ? "收合篩選條件 ⌃" : `展開更多篩選條件（尚有${hiddenCount}項）⌄`;
+}
+
+function toggleOption(key, opt){
+  const arr = state[key];
+  const idx = arr.indexOf(opt);
+  if(idx>-1) arr.splice(idx,1); else arr.push(opt);
+  rFilterRows();
+  rTable();
+}
+function toggleMoreRows(){
+  rowsExpanded = !rowsExpanded;
+  rFilterRows();
+}
+function clearAll(){
+  FILTER_DEFS.forEach(def=> state[def.key] = []);
+  rFilterRows();
+  rTable();
+}
+function applyQuery(){
+  rTable();
+}
+
+function rTable(){
+  const tbody = document.getElementById("etfRows");
+  let matchedCount = 0;
+  tbody.innerHTML = ETFS.map(e=>{
+    const match =
+      (state.freq.length===0     || state.freq.includes(e.freq)) &&
+      (state.type.length===0     || state.type.includes(e.type)) &&
+      (state.region.length===0   || state.region.includes(e.region)) &&
+      (state.industry.length===0 || state.industry.includes(e.industry)) &&
+      (state.country.length===0  || state.country.includes(e.country));
+    if(match) matchedCount++;
+    const cls = match ? "" : " dim";
+    const sign = e.up ? "▲" : "▼";
+    const clr = e.up ? "up" : "down";
+    const tagsHtml = (e.tags||[]).map(t=>`<span class="tag-pill">${t}</span>`).join("");
+    return `<tr class="${cls}">
+      <td class="code">${e.code}</td>
+      <td><span class="fname">${e.name}</span><span class="fnote">${e.note}</span><div class="ftags">${tagsHtml}</div></td>
+      <td>${e.type}</td>
+      <td>${e.date}</td>
+      <td>${e.nav}</td>
+      <td class="${clr}">${sign} ${e.chg}</td>
+      <td class="${clr}">${sign} ${e.pct}</td>
+    </tr>`;
+  }).join("");
+  document.getElementById("matchCount").textContent = matchedCount;
+}
+
+rFilterRows();
+rTable();
+</script>
+</body>
+</html>

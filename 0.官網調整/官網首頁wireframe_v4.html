@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>玉山投信官網｜前台首頁 Wireframe（V14 移除最新消息NEW文字標籤）</title>
+<style>
+:root{
+  --green:#00A19B;        /* 玉山綠（強調色，僅用於重點） */
+  --green-dark:#00726E;
+  --green-tint:#E6F6F5;
+  --ink:#333B40;
+  --gray:#8A939B;
+  --line:#DDE2E6;
+  --ph:#EDF0F2;           /* wireframe 佔位灰 */
+  --ph-line:#C9D1D7;
+  --red:#D0342C;
+  --amber:#E8620C;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",sans-serif;
+  color:var(--ink);background:#FAFBFC;line-height:1.6}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* wireframe 佔位樣式 */
+.ph{background:var(--ph);border:1px dashed var(--ph-line);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:13px}
+
+.chg-tag{display:inline-block;background:var(--green-dark);color:#fff;font-size:11px;font-weight:700;
+  padding:1px 9px;border-radius:999px;vertical-align:2px;margin-left:8px;letter-spacing:1px}
+
+/* ===== Header ===== */
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
+.hd{display:flex;align-items:center;gap:26px;height:60px}
+.logo{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:800;color:var(--green);white-space:nowrap}
+.logo .mt{width:26px;height:22px;background:var(--green);
+  clip-path:polygon(50% 0,100% 100%,0 100%);border-radius:2px}
+nav{display:flex;gap:24px;flex:1}
+nav a{font-size:14.5px;padding:4px 0;border-bottom:2px solid transparent}
+nav a:hover{color:var(--green);border-bottom-color:var(--green)}
+.hd-right{display:flex;align-items:center;gap:12px}
+.sicon{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:#fff;
+  color:var(--gray);display:flex;align-items:center;justify-content:center}
+.btn-trade{background:var(--green);color:#fff;font-size:13.5px;font-weight:700;border:none;
+  padding:8px 20px;border-radius:999px}
+.btn-trade:hover{background:var(--green-dark)}
+
+/* ===== ① Banner（既有，獨立區塊） ===== */
+.banner{padding:20px 0 0;position:relative}
+.banner .ph{height:230px;border-radius:12px;flex-direction:column;gap:8px}
+.dots{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.dots i{width:8px;height:8px;border-radius:50%;background:var(--ph-line)}
+.dots i.on{background:var(--green);width:20px;border-radius:4px}
+
+/* ===== ② 登入線上交易／線上開戶（卡片式，稍微壓到 Banner）＋右側銜接基金快速搜尋 ===== */
+.cta-search-wrap{position:relative;z-index:5;margin-top:-22px}
+.cta-search-row{display:flex;align-items:flex-start;gap:16px}
+.cta-card{flex:none;width:230px;background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:16px;display:flex;flex-direction:column;gap:10px;
+  box-shadow:0 10px 26px rgba(0,40,38,.12)}
+.cta-btn{display:flex;align-items:center;justify-content:center;gap:10px;
+  background:#fff;border:1.5px solid var(--green);color:var(--green);font-size:14.5px;font-weight:800;
+  border-radius:10px;padding:13px 14px}
+.cta-btn:hover{background:var(--green-tint)}
+.cta-btn.primary{background:var(--green);color:#fff}
+.cta-btn.primary:hover{background:var(--green-dark)}
+.cta-btn .ci{width:18px;height:18px;border-radius:6px;background:currentColor;opacity:.18;flex:none}
+
+.search-card{flex:1;min-width:0;background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:20px 24px;box-shadow:0 10px 26px rgba(0,40,38,.06)}
+.search-card h2{font-size:16px;font-weight:800;margin-bottom:4px}
+.search-note{font-size:12px;color:var(--gray);margin-bottom:12px}
+.search-row{display:flex;gap:10px;position:relative}
+.search-input{flex:1;display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);
+  border-radius:8px;padding:0 14px;background:#fff;position:relative}
+.search-input:focus-within{border-color:var(--green)}
+.search-input .mag{color:var(--gray)}
+.search-input input{flex:1;border:none;outline:none;font-size:14.5px;font-family:inherit;
+  height:44px;color:var(--ink);min-width:0}
+.search-input input::placeholder{color:#AEB6BD}
+.btn-search{background:var(--green);color:#fff;font-size:14.5px;font-weight:700;border:none;
+  padding:0 32px;border-radius:8px}
+.btn-search:hover{background:var(--green-dark)}
+.ac{position:absolute;left:0;top:48px;width:100%;background:#fff;
+  border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 22px rgba(0,40,38,.14);
+  z-index:20;overflow:hidden;display:none}
+.ac.open{display:block}
+.ac li{list-style:none;display:flex;justify-content:space-between;align-items:center;
+  padding:10px 14px;font-size:13.5px;cursor:pointer}
+.ac li:hover,.ac li.hl{background:var(--green-tint)}
+.ac li .cd{font-size:12px;color:var(--gray)}
+.ac li b{color:var(--green-dark)}
+.hot-row{margin-top:14px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.hot-row .lb{font-size:13px;color:var(--gray)}
+.hot-chip{background:#fff;border:1px solid var(--line);color:var(--ink);
+  font-size:12.5px;padding:4px 14px;border-radius:999px}
+.hot-chip:hover{border-color:var(--green);color:var(--green)}
+
+/* ===== ③ 快捷選單（既有，位置與樣式維持不變） ===== */
+.quick{padding:26px 0 4px}
+.quick-hd{font-size:13px;color:var(--gray);margin-bottom:10px}
+.quick-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.q-item{background:var(--green-tint);border:1px solid transparent;border-radius:14px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  aspect-ratio:1/1;padding:10px;font-size:13px;font-weight:700;color:var(--green-dark);text-align:center}
+.q-item:hover{background:var(--green);color:#fff}
+.q-item .c{width:36px;height:36px;border-radius:10px;background:#fff;border:1px dashed var(--ph-line)}
+.q-item:hover .c{border-color:#fff}
+
+/* ===== 區塊通用 ===== */
+section.blk{padding:40px 0 8px}
+.blk-hd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap}
+.blk-hd h2{font-size:22px;font-weight:800}
+.blk-hd .more{font-size:13.5px;font-weight:700;color:var(--green)}
+.blk-hd .more:hover{text-decoration:underline}
+.blk-desc{font-size:13px;color:var(--gray);margin-bottom:18px}
+
+/* ===== ④ 精選基金 / ETF（標題直接切換頁籤，取消下方另設之頁籤列） ===== */
+.tab-heading{display:flex;align-items:baseline;gap:26px;margin-bottom:6px}
+.th{border:none;background:transparent;color:var(--gray);font-size:22px;font-weight:800;
+  padding:0 0 10px;border-bottom:3px solid transparent}
+.th.active{color:var(--ink);border-bottom-color:var(--green)}
+.fgrid{display:grid;grid-template-columns:280px 1fr;gap:18px;align-items:start}
+.fmenu{display:flex;flex-direction:column;gap:8px}
+.fmenu button{text-align:left;border:1px solid var(--line);background:#fff;border-radius:8px;
+  padding:12px 14px;font-size:13.5px;line-height:1.45}
+.fmenu button:hover{border-color:var(--green)}
+.fmenu button.active{border-color:var(--green);background:var(--green-tint);
+  color:var(--green-dark);font-weight:700}
+.fcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px 28px}
+.ftype{display:inline-block;font-size:11.5px;color:var(--gray);border:1px solid var(--line);
+  border-radius:999px;padding:2px 12px}
+.fcard h3{font-size:19px;font-weight:800;margin:10px 0 16px}
+.nrow{display:flex;flex-wrap:wrap;gap:34px;align-items:flex-end}
+.nmain .lb{font-size:12px;color:var(--gray)}
+.nmain .v{font-size:34px;font-weight:800;line-height:1.1}
+.nmain .v small{font-size:12px;font-weight:400;color:var(--gray);margin-left:6px}
+.nmain .d{font-size:11.5px;color:var(--gray);margin-top:4px}
+.chg .lb{font-size:12px;color:var(--gray)}
+.chg .v{font-size:18px;font-weight:800}
+.up{color:var(--red)} .down{color:var(--green)}
+table.perf{width:100%;border-collapse:collapse;margin-top:18px}
+table.perf th{background:#F5F7F8;color:var(--gray);font-weight:600;font-size:12.5px;
+  padding:8px 6px;border:1px solid var(--line)}
+table.perf td{font-size:14px;font-weight:700;text-align:center;padding:9px 6px;border:1px solid var(--line)}
+.src{font-size:11.5px;color:#AEB6BD;margin-top:8px}
+.facts{display:flex;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+.btn-o{border:1.5px solid var(--green);background:#fff;color:var(--green);font-size:13.5px;
+  font-weight:700;padding:8px 22px;border-radius:8px}
+.btn-o:hover{background:var(--green-tint)}
+.btn-s{border:1.5px solid var(--green);background:var(--green);color:#fff;font-size:13.5px;
+  font-weight:700;padding:8px 22px;border-radius:8px}
+.btn-s:hover{background:var(--green-dark)}
+.facts .dt{margin-left:auto;font-size:13px;font-weight:700;color:var(--green)}
+
+/* ===== ⑤ 投資觀點／基金評論／影音專區（三欄式：各欄獨立標題＋圖文卡片） ===== */
+.ic-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:34px}
+.ic-col-ttl{font-size:22px;font-weight:800;color:var(--green-dark);margin-bottom:16px}
+.ic-thumb{height:170px;border-radius:10px;overflow:hidden;margin-bottom:14px;position:relative}
+.ic-thumb .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:22px;color:var(--gray)}
+.ic-title{font-size:15px;font-weight:800;line-height:1.5;margin-bottom:8px}
+.ic-date{font-size:12px;color:var(--gray);margin-bottom:10px}
+.ic-desc{font-size:13px;color:var(--gray);line-height:1.7;margin-bottom:12px}
+.ic-more{font-size:13.5px;font-weight:700;color:var(--green)}
+.ic-more:hover{text-decoration:underline}
+/* 舊版樣式（保留供其他頁面/舊卡片參照，本頁已不使用） */
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.news-card{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.news-card:hover{border-color:var(--green)}
+.n-thumb{height:130px;position:relative}
+.n-thumb .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:22px;color:var(--gray)}
+.n-body{padding:14px 16px 18px}
+.n-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;
+  color:var(--green-dark);background:var(--green-tint);border-radius:999px;padding:2px 10px;margin-bottom:8px}
+.n-title{font-size:14.5px;font-weight:800;line-height:1.4;margin-bottom:6px}
+.n-date{font-size:11.5px;color:var(--gray)}
+
+/* ===== ⑥ 依投資目的推薦（色塊標籤＋置中ICON＋說明文字＋按鈕） ===== */
+.goal-wrap{position:relative}
+.goal-grid{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+  padding-bottom:4px;scrollbar-width:none;-ms-overflow-style:none}
+.goal-grid::-webkit-scrollbar{display:none}
+.goal-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px 20px;
+  display:flex;flex-direction:column;flex:0 0 258px;scroll-snap-align:start}
+.car-arrow{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--line);background:#fff;color:var(--green-dark);font-size:18px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,40,38,.1);z-index:2}
+.car-arrow:hover{border-color:var(--green);color:var(--green)}
+.car-arrow.prev{left:-19px}
+.car-arrow.next{right:-19px}
+@media (max-width:900px){.car-arrow{display:none}}
+.goal-card:hover{border-color:var(--green)}
+.goal-tag{align-self:flex-start;display:inline-flex;font-size:12px;font-weight:700;color:#fff;
+  border-radius:999px;padding:4px 14px;margin-bottom:16px}
+.goal-tag.c1{background:var(--red)}
+.goal-tag.c2{background:var(--green-dark)}
+.goal-title{font-size:16.5px;font-weight:800;color:var(--ink);margin-bottom:20px}
+.goal-icon{width:64px;height:64px;border-radius:50%;background:var(--ph);border:1px solid var(--ph-line);
+  display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:12px;margin:0 auto 20px}
+.goal-desc{font-size:13px;color:var(--gray);line-height:1.75;flex:1;margin-bottom:20px}
+.goal-btn{display:block;text-align:center;border-radius:8px;padding:10px 0;font-size:14px;font-weight:700}
+.goal-btn.outline{border:1.5px solid var(--green);background:#fff;color:var(--green)}
+.goal-btn.outline:hover{background:var(--green-tint)}
+.goal-btn.solid{border:1.5px solid var(--green-dark);background:var(--green-dark);color:#fff}
+.goal-btn.solid:hover{background:var(--green)}
+
+/* ===== 既有內容佔位 ===== */
+.exist{padding:40px 0}
+.exist .ph{height:150px}
+.exist h2{font-size:22px;font-weight:800;margin-bottom:14px;color:var(--gray)}
+
+/* ===== ⑦ 最新消息（列表＋頁籤：一般公告／基金公告） ===== */
+.news2-sec{padding:40px 0 8px}
+.news2-hd{font-size:26px;font-weight:800;color:var(--green);margin-bottom:20px}
+.news2-tabs{display:flex}
+.news2-tab{flex:1;text-align:center;padding:16px;font-size:15px;font-weight:700;
+  background:#F5F7F8;color:var(--gray);border:none}
+.news2-tab.active{background:var(--green-dark);color:#fff}
+.news2-list{border:1px solid var(--line);border-top:none}
+.news2-row{display:flex;align-items:center;gap:16px;padding:16px 22px;border-bottom:1px solid var(--line)}
+.news2-row:last-child{border-bottom:none}
+.news2-row:hover{background:#FAFBFC}
+.news2-pin{width:24px;height:24px;border-radius:50%;background:var(--green-tint);color:var(--green-dark);
+  display:flex;align-items:center;justify-content:center;font-size:12px;flex:none}
+.news2-pin-empty{width:24px;flex:none}
+.news2-date{font-size:13px;color:var(--gray);width:90px;flex:none}
+.news2-title{flex:1;font-size:14px;color:var(--ink)}
+.news2-arrow{color:var(--gray);font-size:16px;flex:none}
+.news2-more-wrap{display:flex;justify-content:flex-end;margin-top:20px}
+.btn-more2{border:1.5px solid var(--green);background:#fff;color:var(--green);font-size:14px;
+  font-weight:700;padding:10px 28px;border-radius:8px;display:inline-block}
+.btn-more2:hover{background:var(--green-tint)}
+
+/* ===== Footer ===== */
+footer{background:#fff;border-top:1px solid var(--line);padding:30px 0;margin-top:30px}
+footer .ph{height:90px}
+footer p{font-size:11.5px;color:#AEB6BD;margin-top:14px;line-height:1.7}
+
+@media (max-width:900px){
+  nav{display:none}
+  .fgrid{grid-template-columns:1fr}
+  .fmenu{flex-direction:row;overflow-x:auto}
+  .fmenu button{flex:none}
+  .news-grid{grid-template-columns:1fr}
+  .ic-cols{grid-template-columns:1fr}
+  .quick-grid{grid-template-columns:repeat(3,1fr)}
+  .search-row{flex-direction:column}
+  .btn-search{height:44px}
+  .cta-search-wrap{margin-top:14px}
+  .cta-search-row{flex-direction:column}
+  .cta-card{width:100%;flex-direction:row}
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="wrap hd">
+    <a class="logo" href="#"><span class="mt"></span>玉山投信</a>
+    <nav>
+      <a href="#">基金中心</a><a href="#">ETF專區</a><a href="#">投資觀點</a>
+      <a href="#">客戶服務</a><a href="#">關於我們</a><a href="#">玉山服務網</a>
+    </nav>
+    <div class="hd-right">
+      <div class="sicon">⌕</div>
+      <button class="btn-trade">線上交易</button>
+    </div>
+  </div>
+</header>
+
+<!-- ① Banner（既有，獨立區塊） -->
+<div class="banner">
+  <div class="wrap">
+    <div class="ph">
+      主視覺 Banner 輪播（既有）
+      <div class="dots"><i class="on"></i><i></i><i></i><i></i></div>
+    </div>
+  </div>
+</div>
+
+<!-- ② 登入線上交易／線上開戶（卡片式，稍微壓到 Banner）＋右側銜接基金快速搜尋 -->
+<div class="cta-search-wrap">
+  <div class="wrap cta-search-row">
+    <div class="cta-card">
+      <a class="cta-btn primary" href="#"><span class="ci"></span>登入線上交易</a>
+      <a class="cta-btn" href="#"><span class="ci"></span>線上開戶</a>
+    </div>
+    <div class="search-card" id="si2">
+      <h2>快速基金搜尋</h2>
+      <div class="search-row" id="si">
+        <div class="search-input">
+          <span class="mag">⌕</span>
+          <input id="q" type="text" placeholder="輸入基金名稱或基金代號，快速查詢淨值與績效"
+                 autocomplete="off" oninput="onQuery()" onfocus="onQuery()" onkeydown="onKey(event)">
+        </div>
+        <button class="btn-search" onclick="doSearch()">搜尋</button>
+        <ul class="ac" id="ac"></ul>
+      </div>
+      <div class="hot-row">
+        <span class="lb">熱門基金：</span>
+        <button class="hot-chip" onclick="fill('玉山科技島基金（08）')">玉山科技島（08）</button>
+        <button class="hot-chip" onclick="fill('玉山中小型股基金（T1）')">中小型股（T1）</button>
+        <button class="hot-chip" onclick="fill('009803')">009803</button>
+        <button class="hot-chip" onclick="fill('00988B')">00988B</button>
+        <button class="hot-chip" onclick="fill('玉山全球基礎建設基金（27）')">全球基礎建設（27）</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ③ 快捷選單（既有，位置與樣式維持不變） -->
+<div class="quick">
+  <div class="wrap">
+    <div class="quick-grid">
+      <a class="q-item" href="#"><span class="c"></span>立即交易</a>
+      <a class="q-item" href="#"><span class="c"></span>預約開戶</a>
+      <a class="q-item" href="#"><span class="c"></span>基金淨值</a>
+      <a class="q-item" href="#"><span class="c"></span>表單下載</a>
+      <a class="q-item" href="#"><span class="c"></span>Podcast</a>
+      <a class="q-item" href="#"><span class="c"></span>聰明懶人投資法</a>
+    </div>
+  </div>
+</div>
+
+<!-- ④ 精選基金／ETF -->
+<section class="blk">
+  <div class="wrap">
+    <div class="blk-hd">
+      <div class="tab-heading">
+        <button class="th active" id="tF" onclick="swTab('fund')">精選基金</button>
+        <button class="th" id="tE" onclick="swTab('etf')">精選ETF</button>
+      </div>
+      <a class="more" href="#">更多基金 →</a>
+    </div>
+    <div class="fgrid">
+      <div class="fmenu" id="fmenu"></div>
+      <div class="fcard" id="fcard"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ 投資觀點／基金評論／影音專區（三欄式，各欄獨立標題＋圖文卡片，內容參照客戶提供之最新版型） -->
+<section class="blk">
+  <div class="wrap">
+    <div class="ic-cols">
+      <div class="ic-col">
+        <h2 class="ic-col-ttl">投資觀點</h2>
+        <div class="ic-thumb ph">封面圖片佔位（後台維護）</div>
+        <div class="ic-title">009827 聚焦AI算力三大支柱，掌握全球算力長線成長契機</div>
+        <div class="ic-date">2026/07/22</div>
+        <div class="ic-desc">玉山投信推出全台首檔全球算力主題ETF「009827」，聚焦AI核心產業，布局全球三大算力支柱與七大產業鏈，精選50檔領導企業，掌握AI長線成長商機。基金…</div>
+        <a class="ic-more" href="#">了解更多 ›</a>
+      </div>
+      <div class="ic-col">
+        <h2 class="ic-col-ttl">基金評論</h2>
+        <div class="ic-thumb ph">封面圖片佔位（後台維護）</div>
+        <div class="ic-title">經理人月報-玉山全球資源基金</div>
+        <div class="ic-date">2026/07/02</div>
+        <div class="ic-desc">近期國際局勢不確定性升高，荷姆茲海峽能否恢復全面開放仍是市場焦點。儘管和平談判可望重啟，但地緣政治風險尚未消除，使投資人持續關注油價與天然氣價格的下…</div>
+        <a class="ic-more" href="#">了解更多 ›</a>
+      </div>
+      <div class="ic-col">
+        <h2 class="ic-col-ttl">影音專區<span class="chg-tag">最新消息→影音專區</span></h2>
+        <div class="ic-thumb ph">封面圖片佔位（後台維護）</div>
+        <div class="ic-title">玉山美元嚴選非投資等級債券ETF基金(本基金之配息來源可能為收益平準金)收益分配評價結果公告</div>
+        <div class="ic-date">2026/07/14</div>
+        <div class="ic-desc">公告玉山美元嚴選非投資等級債券ETF證券投資信託基金(本基金之配息來源可能為收益平準金)115年06月30日收益分配決定做成日每受益權單位實際配發金額為新臺幣0.1…</div>
+        <a class="ic-more" href="#">了解更多 ›</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑥ 依投資目的推薦（色塊標籤＋置中ICON＋說明文字＋按鈕） -->
+<section class="blk">
+  <div class="wrap">
+    <div class="blk-hd"><h2>依投資目的推薦基金<span class="chg-tag">版型調整</span></h2></div>
+    <div class="goal-wrap">
+      <button class="car-arrow prev" onclick="goalScroll(-1)" aria-label="上一個">‹</button>
+      <div class="goal-grid" id="goalGrid">
+      <div class="goal-card">
+        <span class="goal-tag c1">退休規劃</span>
+        <div class="goal-title">穩健累積退休金</div>
+        <div class="goal-icon">icon</div>
+        <div class="goal-desc">善用時間、投資基金，賺基本面長期複利的機會，透過月配息／平衡型精選建構「資產＋長樂」的目標。</div>
+        <a class="goal-btn outline" href="#">了解更多</a>
+      </div>
+      <div class="goal-card">
+        <span class="goal-tag c2">子女教育</span>
+        <div class="goal-title">中長期資產準備</div>
+        <div class="goal-icon">icon</div>
+        <div class="goal-desc">及早規劃子女教育金，透過定期定額精選基金持續累積，打造第二筆準備金。</div>
+        <a class="goal-btn solid" href="#">立即啟動</a>
+      </div>
+      <div class="goal-card">
+        <span class="goal-tag c2">積極增值</span>
+        <div class="goal-title">掌握成長趨勢</div>
+        <div class="goal-icon">icon</div>
+        <div class="goal-desc">一筆資金、二倍投資效率的科技／台股基金組合，為積極增值啟動生生不息的投資大計畫。</div>
+        <a class="goal-btn solid" href="#">效率投資</a>
+      </div>
+      <div class="goal-card">
+        <span class="goal-tag c2">穩定收益</span>
+        <div class="goal-title">現金流優先</div>
+        <div class="goal-icon">icon</div>
+        <div class="goal-desc">累積現金流必備利器，具備節稅、加碼、分批進場、平均成本、分散風險等功能。</div>
+        <a class="goal-btn outline" href="#">輕鬆上手</a>
+      </div>
+      <div class="goal-card">
+        <span class="goal-tag c1">短期理財</span>
+        <div class="goal-title">閒置資金停泊</div>
+        <div class="goal-icon">icon</div>
+        <div class="goal-desc">貨幣市場／短債基金彈性運用，兼顧流動性與相對穩定的收益表現。</div>
+        <a class="goal-btn outline" href="#">立即了解</a>
+      </div>
+      </div>
+      <button class="car-arrow next" onclick="goalScroll(1)" aria-label="下一個">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ 最新消息（新增區塊：頁籤列表＋查看更多按鈕） -->
+<section class="news2-sec">
+  <div class="wrap">
+    <h2 class="news2-hd">最新消息</h2>
+    <div class="news2-tabs">
+      <button class="news2-tab active" id="ntG" onclick="newsTab('general')">一般公告</button>
+      <button class="news2-tab" id="ntF" onclick="newsTab('fund')">基金公告</button>
+    </div>
+    <div class="news2-list" id="newsList"></div>
+    <div class="news2-more-wrap">
+      <a class="btn-more2" href="#">查看更多</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="ph">Footer 網站導覽／聯絡資訊（既有）</div>
+    <p>本頁為系統改版之前台功能線框示意，所有淨值、績效與文字內容僅供版面示意，非投資建議，實際內容以正式網站為準。</p>
+  </div>
+</footer>
+
+<script>
+/* ---- 精選基金 / ETF（示意資料） ---- */
+const FUNDS = {
+  fund: [
+    { name:"玉山科技島基金", code:"08", type:"國內股票型", nav:"213.54", date:"2026/07/03",
+      chg:"3.00", pct:"1.42%", up:true,
+      perf:{ "三個月":"51.99%","六個月":"114.60%","一年":"262.98%","二年":"231.64%","成立至今":"1997.30%" } },
+    { name:"玉山中小型股基金", code:"T1", type:"國內股票型", nav:"340.37", date:"2026/07/03",
+      chg:"1.70", pct:"0.50%", up:true,
+      perf:{ "三個月":"51.88%","六個月":"120.57%","一年":"248.58%","二年":"254.52%","成立至今":"3371.50%" } },
+    { name:"玉山全球基礎建設基金", code:"27", type:"海外股票型", nav:"23.73", date:"2026/07/02",
+      chg:"0.40", pct:"1.71%", up:true,
+      perf:{ "三個月":"-3.80%","六個月":"7.86%","一年":"22.66%","二年":"28.75%","成立至今":"130.60%" } },
+    { name:"玉山全球生態友善ESG多重資產基金", code:"R1", type:"跨國投資多重資產型", nav:"16.1618", date:"2026/07/02",
+      chg:"0.2627", pct:"1.60%", up:false,
+      perf:{ "三個月":"11.05%","六個月":"20.62%","一年":"38.03%","二年":"34.27%","成立至今":"62.77%" } }
+  ],
+  etf: [
+    { name:"玉山臺灣市值動能50 ETF", code:"009803", type:"國內指數股票型", nav:"18.62", date:"2026/07/03",
+      chg:"0.21", pct:"1.14%", up:true,
+      perf:{ "三個月":"12.4%","六個月":"25.1%","一年":"38.6%","二年":"—","成立至今":"46.2%" } },
+    { name:"玉山全球跨國藍籌100 ETF", code:"00975B", type:"國外指數股票型", nav:"15.34", date:"2026/07/03",
+      chg:"0.09", pct:"0.59%", up:true,
+      perf:{ "三個月":"6.8%","六個月":"11.2%","一年":"19.5%","二年":"—","成立至今":"22.8%" } },
+    { name:"玉山美元嚴選非投資等級債券 ETF", code:"00988B", type:"國外指數債券型", nav:"10.05", date:"2026/07/03",
+      chg:"0.02", pct:"0.20%", up:false,
+      perf:{ "三個月":"1.8%","六個月":"3.6%","一年":"7.2%","二年":"—","成立至今":"9.4%" } }
+  ]
+};
+let tab="fund", idx=0;
+
+/* ---- 最新消息（示意資料，一般公告／基金公告） ---- */
+const NEWS2 = {
+  general: [
+    { pin:true,  date:"2025/10/03", title:"玉山壯大金控版圖 啟動投信新篇章" },
+    { pin:false, date:"2026/07/20", title:"網站暨交易專區及自動語音服務系統維護公告" },
+    { pin:false, date:"2026/07/02", title:"EC網路交易專區系統維護公告" },
+    { pin:false, date:"2026/06/15", title:"網站暨交易專區及自動語音服務系統維護公告" },
+    { pin:false, date:"2026/05/19", title:"網站暨交易專區及自動語音服務系統維護公告" }
+  ],
+  fund: [
+    { pin:false, date:"2026/07/14", title:"玉山美元嚴選非投資等級債券ETF基金收益分配評價結果公告" },
+    { pin:false, date:"2026/06/30", title:"玉山全球資源基金經理人月報公告" },
+    { pin:false, date:"2026/06/12", title:"玉山科技島基金收益分配公告" },
+    { pin:false, date:"2026/05/28", title:"玉山中小型股基金基金經理人變更公告" }
+  ]
+};
+let newsTabState = "general";
+function newsTab(t){
+  newsTabState = t;
+  document.getElementById("ntG").classList.toggle("active", t==="general");
+  document.getElementById("ntF").classList.toggle("active", t==="fund");
+  rNews();
+}
+function rNews(){
+  document.getElementById("newsList").innerHTML = NEWS2[newsTabState].map(n => `
+    <a class="news2-row" href="#">
+      ${n.pin ? '<span class="news2-pin">📌</span>' : '<span class="news2-pin-empty"></span>'}
+      <span class="news2-date">${n.date}</span>
+      <span class="news2-title">${n.title}</span>
+      <span class="news2-arrow">›</span>
+    </a>`).join("");
+}
+rNews();
+
+function goalScroll(dir){
+  const el = document.getElementById("goalGrid");
+  const card = el.querySelector(".goal-card");
+  const step = card ? card.offsetWidth + 18 : 276;
+  el.scrollBy({left: dir*step, behavior:"smooth"});
+}
+function swTab(t){ tab=t; idx=0;
+  document.getElementById("tF").classList.toggle("active",t==="fund");
+  document.getElementById("tE").classList.toggle("active",t==="etf");
+  rMenu(); rCard(); }
+function sel(i){ idx=i; rMenu(); rCard(); }
+function rMenu(){
+  document.getElementById("fmenu").innerHTML = FUNDS[tab].map((f,i)=>
+    `<button class="${i===idx?'active':''}" onclick="sel(${i})">${f.name}</button>`).join(""); }
+function rCard(){
+  const f=FUNDS[tab][idx], c=f.up?"up":"down", a=f.up?"▲":"▼";
+  document.getElementById("fcard").innerHTML = `
+    <span class="ftype">${f.type}</span>
+    <h3>${f.name}</h3>
+    <div class="nrow">
+      <div class="nmain"><div class="lb">最新淨值</div>
+        <div class="v">${f.nav}<small>新臺幣</small></div>
+        <div class="d">淨值日期 ${f.date}</div></div>
+      <div class="chg"><div class="lb">漲跌</div><div class="v ${c}">${a} ${f.chg}</div></div>
+      <div class="chg"><div class="lb">漲跌幅(%)</div><div class="v ${c}">${a} ${f.pct}</div></div>
+    </div>
+    <table class="perf">
+      <tr>${Object.keys(f.perf).map(k=>`<th>${k}</th>`).join("")}</tr>
+      <tr>${Object.values(f.perf).map(v=>`<td class="${v.startsWith('-')?'down':'up'}">${v}</td>`).join("")}</tr>
+    </table>
+    <div class="src">資料來源：Lipper　資料日期：2026/05/31（示意）</div>
+    <div class="facts">
+      <button class="btn-o">加入追蹤</button>
+      <button class="btn-s">立即申購</button>
+      <a class="dt" href="#">詳細基金資料 →</a>
+    </div>`; }
+
+/* ---- 搜尋 autocomplete（示意，資料沿用精選基金/ETF＋熱門基金） ---- */
+const SEARCH_POOL = [
+  { name:"玉山科技島基金", code:"08" },
+  { name:"玉山中小型股基金", code:"T1" },
+  { name:"玉山全球基礎建設基金", code:"27" },
+  { name:"玉山全球生態友善ESG多重資產基金", code:"R1" },
+  { name:"玉山臺灣市值動能50 ETF", code:"009803" },
+  { name:"玉山美元嚴選非投資等級債券 ETF", code:"00988B" }
+];
+let hl=-1, acItems=[];
+const norm = s => (s||"").trim().toLowerCase();
+const matchQ = (f,q) => f.name.toLowerCase().includes(q) || f.code.toLowerCase().includes(q);
+function esc(s){ return s.replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function hlText(text,q){
+  const i=text.toLowerCase().indexOf(q);
+  if(i<0) return esc(text);
+  return esc(text.slice(0,i))+"<b>"+esc(text.slice(i,i+q.length))+"</b>"+esc(text.slice(i+q.length));
+}
+function onQuery(){
+  const ac=document.getElementById("ac");
+  const q=norm(document.getElementById("q").value);
+  hl=-1;
+  if(!q){ ac.classList.remove("open"); return; }
+  acItems = SEARCH_POOL.filter(f=>matchQ(f,q)).slice(0,8);
+  ac.innerHTML = acItems.length
+    ? acItems.map((f,i)=>`<li onmousedown="pickAc(${i});event.preventDefault()">
+        <span>${hlText(f.name,q)}</span><span class="cd">代號 ${hlText(f.code,q)}</span></li>`).join("")
+    : `<li style="color:var(--gray);cursor:default">查無符合的基金名稱或代號</li>`;
+  ac.classList.add("open");
+}
+function pickAc(i){
+  document.getElementById("q").value=acItems[i].name;
+  document.getElementById("ac").classList.remove("open");
+}
+function onKey(e){
+  const ac=document.getElementById("ac");
+  if(!ac.classList.contains("open")){ if(e.key==="Enter") doSearch(); return; }
+  const lis=[...ac.querySelectorAll("li")];
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"){
+    e.preventDefault();
+    hl = e.key==="ArrowDown" ? Math.min(hl+1,lis.length-1) : Math.max(hl-1,0);
+    lis.forEach((li,i)=>li.classList.toggle("hl",i===hl));
+  }else if(e.key==="Enter"){
+    e.preventDefault();
+    if(hl>=0 && acItems[hl]) pickAc(hl); else doSearch();
+  }else if(e.key==="Escape"){ ac.classList.remove("open"); }
+}
+document.addEventListener("click",e=>{
+  const si=document.getElementById("si");
+  if(si && !si.contains(e.target)) document.getElementById("ac").classList.remove("open");
+});
+function fill(v){ const el=document.getElementById("q"); el.value=v; el.focus(); onQuery(); }
+function doSearch(){
+  const v=document.getElementById("q").value.trim();
+  if(!v){ alert("請輸入基金名稱或代號"); return; }
+  const q=norm(v), hits=SEARCH_POOL.filter(f=>matchQ(f,q));
+  if(hits.length===1) alert(`（示意）僅一筆結果「${hits[0].name}」→ 直接導向基金內頁`);
+  else if(hits.length>1) alert(`（示意）共 ${hits.length} 筆結果 → 導向基金總覽頁並帶入關鍵字篩選`);
+  else alert(`（示意）查無「${v}」相關基金`);
+}
+
+rMenu(); rCard();
+</script>
+</body>
+</html>

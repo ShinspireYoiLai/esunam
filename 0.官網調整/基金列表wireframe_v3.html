@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>基金總覽（列表頁）Wireframe</title>
+<style>
+:root{
+  --green:#00A19B;
+  --green-dark:#00726E;
+  --green-tint:#E6F6F5;
+  --ink:#333B40;
+  --gray:#8A939B;
+  --line:#DDE2E6;
+  --ph:#EDF0F2;
+  --ph-line:#C9D1D7;
+  --red:#D0342C;
+  --amber:#E8620C;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",sans-serif;
+  color:var(--ink);background:#FAFBFC;line-height:1.6}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.new-tag{display:inline-block;background:var(--amber);color:#fff;font-size:11px;font-weight:700;
+  padding:1px 9px;border-radius:999px;vertical-align:2px;margin-left:8px;letter-spacing:1px}
+.demo-bar{background:#FFF7EF;border-bottom:1px solid #F1DCC5;color:var(--amber);
+  font-size:12.5px;text-align:center;padding:5px 12px}
+
+/* Header */
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
+.hd{display:flex;align-items:center;gap:26px;height:60px}
+.logo{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:800;color:var(--green);white-space:nowrap}
+.logo .mt{width:26px;height:22px;background:var(--green);clip-path:polygon(50% 0,100% 100%,0 100%);border-radius:2px}
+nav{display:flex;gap:24px;flex:1}
+nav a{font-size:14.5px;padding:4px 0;border-bottom:2px solid transparent}
+nav a:hover{color:var(--green);border-bottom-color:var(--green)}
+.btn-trade{background:var(--green);color:#fff;font-size:13.5px;font-weight:700;border:none;
+  padding:8px 20px;border-radius:999px;margin-left:auto}
+.btn-trade:hover{background:var(--green-dark)}
+
+.crumb{font-size:12.5px;color:var(--gray);padding:16px 0 4px}
+.crumb b{color:var(--ink);font-weight:600}
+h1{font-size:24px;font-weight:800;padding:2px 0 14px}
+
+/* 境內/境外 */
+.scope{display:inline-flex;border:1px solid var(--line);border-radius:999px;background:#fff;padding:3px;margin-bottom:18px}
+.scope button{border:none;background:transparent;color:var(--gray);font-size:14px;font-weight:700;
+  padding:8px 30px;border-radius:999px}
+.scope button.active{background:var(--green);color:#fff}
+
+/* 快速搜尋＋autocomplete */
+.f-search{position:relative;padding:16px 0 14px;border-bottom:1px dashed var(--ph-line)}
+.f-search .row{display:flex;gap:10px}
+.si{flex:1;max-width:520px;display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);
+  border-radius:8px;padding:0 12px;background:#fff;position:relative}
+.si:focus-within{border-color:var(--green)}
+.si .mag{color:var(--gray)}
+.si input{flex:1;border:none;outline:none;font-size:14px;font-family:inherit;height:42px;color:var(--ink);min-width:0}
+.si input::placeholder{color:#AEB6BD}
+.si .clr{border:none;background:transparent;color:var(--gray);font-size:15px;display:none;padding:4px}
+.si.has .clr{display:block}
+.ac{position:absolute;left:0;top:46px;width:100%;max-width:520px;background:#fff;
+  border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 22px rgba(0,40,38,.14);
+  z-index:20;overflow:hidden;display:none}
+.ac.open{display:block}
+.ac li{list-style:none;display:flex;justify-content:space-between;align-items:center;
+  padding:10px 14px;font-size:13.5px;cursor:pointer}
+.ac li:hover,.ac li.hl{background:var(--green-tint)}
+.ac li .cd{font-size:12px;color:var(--gray)}
+.ac li b{color:var(--green-dark)}
+.ac .no{padding:12px 14px;font-size:12.5px;color:var(--gray)}
+
+/* 篩選卡片：全部改為勾選框 */
+.filter{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 24px 20px;margin-bottom:20px}
+.f-group{display:flex;align-items:flex-start;gap:14px;padding:13px 0;border-bottom:1px dashed var(--ph-line)}
+.f-group:last-of-type{border-bottom:none}
+.f-group .g-ttl{flex:none;width:118px;font-size:13.5px;font-weight:800;padding-top:7px}
+.f-group .g-ttl .sub{display:block;font-size:10.5px;color:var(--gray);font-weight:400;line-height:1.4}
+.chk-row{display:flex;flex-wrap:wrap;gap:8px;flex:1}
+.chk{display:inline-flex;align-items:center;gap:7px;border:1.5px solid var(--line);border-radius:8px;
+  background:#fff;padding:7px 14px;font-size:13px;color:var(--ink);cursor:pointer;user-select:none;transition:.15s}
+.chk:hover{border-color:var(--green)}
+.chk .box{width:16px;height:16px;border:1.5px solid var(--ph-line);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;background:#fff;flex:none}
+.chk.on{border-color:var(--green);background:var(--green-tint);color:var(--green-dark);font-weight:700}
+.chk.on .box{background:var(--green);border-color:var(--green)}
+
+/* 篩選群組收合／展開切換（初次進入預設收合） */
+.f-toggle{padding:12px 0 2px}
+.btn-toggle{border:1px dashed var(--ph-line);background:#fff;color:var(--green-dark);
+  font-size:12.5px;font-weight:700;padding:7px 16px;border-radius:999px}
+.btn-toggle:hover{border-color:var(--green);background:var(--green-tint)}
+
+.f-actions{display:flex;align-items:center;gap:12px;margin-top:16px}
+.btn-clear{border:1.5px solid var(--line);background:#fff;color:var(--gray);font-size:13.5px;
+  font-weight:700;padding:9px 26px;border-radius:8px}
+.btn-clear:hover{border-color:var(--gray)}
+.btn-query{border:none;background:var(--green);color:#fff;font-size:13.5px;font-weight:700;
+  padding:10px 36px;border-radius:8px}
+.btn-query:hover{background:var(--green-dark)}
+.f-actions .cnt{margin-left:auto;font-size:13px;color:var(--gray)}
+.f-actions .cnt b{color:var(--green-dark);font-size:15px}
+
+/* 結果頁籤（原三頁籤，移除總覽） */
+.rtabs{display:flex;align-items:center;gap:4px;border-bottom:2px solid var(--line);flex-wrap:wrap}
+.rtab{border:none;background:transparent;color:var(--gray);font-size:14.5px;font-weight:700;
+  padding:11px 26px;border-bottom:3px solid transparent;margin-bottom:-2px}
+.rtab:hover{color:var(--green)}
+.rtab.active{color:var(--green-dark);border-bottom-color:var(--green)}
+.rtab.removed{color:#C4CBD1;text-decoration:line-through;cursor:not-allowed;
+  border:1px dashed var(--ph-line);border-radius:8px 8px 0 0;margin-right:6px;padding:9px 22px}
+.rm-note{font-size:11px;font-weight:700;color:var(--amber);background:#FFF4EA;
+  border:1px solid #F1DCC5;border-radius:999px;padding:1px 10px;margin-left:-2px;margin-right:10px}
+
+/* 表格 */
+.tbl-card{background:#fff;border:1px solid var(--line);border-top:none;border-radius:0 0 12px 12px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:860px}
+th{background:#F5F7F8;color:var(--gray);font-weight:600;font-size:12.5px;text-align:left;
+  padding:11px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+th.num,td.num{text-align:right}
+th.op,td.op{text-align:center}
+td{font-size:13.5px;padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:hover td{background:#FAFCFC}
+.fname{font-weight:700}
+.itag{display:inline-block;font-size:11px;color:var(--green-dark);background:var(--green-tint);
+  border-radius:999px;padding:1px 10px;margin:2px 4px 0 0}
+.itag.none{color:var(--gray);background:var(--ph)}
+.up{color:var(--red);font-weight:800}
+.down{color:var(--green);font-weight:800}
+.b-op{border:1.5px solid var(--green);border-radius:6px;font-size:12px;font-weight:700;
+  padding:5px 12px;background:#fff;color:var(--green);margin:0 2px}
+.b-op.s{background:var(--green);color:#fff}
+.b-op:hover{background:var(--green-tint)}
+.b-op.s:hover{background:var(--green-dark)}
+.empty{padding:50px;text-align:center;color:var(--gray);font-size:14px}
+
+footer{background:#fff;border-top:1px solid var(--line);padding:24px 0;margin-top:40px}
+footer p{font-size:11.5px;color:#AEB6BD;line-height:1.7}
+
+@media (max-width:900px){
+  nav{display:none}
+  .f-group{flex-direction:column;gap:8px}
+  .f-group .g-ttl{width:auto;padding-top:0}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap hd">
+    <a class="logo" href="#"><span class="mt"></span>玉山投信</a>
+    <nav>
+      <a href="#">基金中心</a><a href="#">ETF專區</a><a href="#">投資觀點</a>
+      <a href="#">客戶服務</a><a href="#">關於我們</a>
+    </nav>
+    <button class="btn-trade">線上交易</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb">首頁 ＞ 基金中心 ＞ <b>基金總覽</b></div>
+  <h1>基金總覽</h1>
+
+  <div class="scope">
+    <button class="active">境內基金</button>
+    <button>境外基金</button>
+  </div>
+
+  <!-- 篩選：全部改為勾選框 -->
+  <div class="filter">
+    <!-- 快速搜尋（autocomplete 基金名稱／代號） -->
+    <div class="f-search">
+      <div class="row">
+        <div class="si" id="si">
+          <span class="mag">⌕</span>
+          <input id="q" type="text" placeholder="輸入基金名稱或基金代號，快速搜尋" autocomplete="off"
+                 oninput="onQuery()" onfocus="onQuery()" onkeydown="onKey(event)">
+          <button class="clr" onclick="clearQ()" title="清除">✕</button>
+          <ul class="ac" id="ac"></ul>
+        </div>
+        <span style="font-size:12px;color:var(--gray);align-self:center">輸入即顯示建議<span class="new-tag">NEW</span></span>
+      </div>
+    </div>
+    <div id="filterGroups"></div>
+    <div class="f-actions">
+      <button class="btn-clear" onclick="clearAll()">全部清除</button>
+      <button class="btn-query" onclick="renderTable()">查詢</button>
+      <span class="cnt">符合條件 <b id="cnt">0</b> 檔</span>
+    </div>
+  </div>
+
+  <!-- 結果頁籤：原「總覽／淨值／績效」→ 移除總覽 -->
+  <div class="rtabs">
+    <button class="rtab active" id="rtNav" onclick="swView('nav')">淨值</button>
+    <button class="rtab" id="rtPerf" onclick="swView('perf')">績效</button>
+  </div>
+
+  <div class="tbl-card">
+    <table id="tbl"></table>
+    <div class="empty" id="empty" style="display:none">無符合篩選條件之基金，請調整篩選條件</div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>本頁為系統改版之前台功能線框示意，所有淨值、績效與產業別分類僅供版面示意，非投資建議，實際內容以正式網站為準。玉山投信獨立經營管理。</p>
+  </div>
+</footer>
+
+<script>
+/* ===== 篩選群組定義（選項由後台／資料維護，示意）=====
+   排序需求(2)：依產業別／基金類型／投資區域／計價幣別／風險等級／配息方式 */
+const FILTERS = [
+  { key:"ind", label:"依產業別", isNew:true, multiField:true,
+    opts:["科技","半導體","AI 人工智慧","金融","醫療生技","基礎建設","能源資源","ESG 永續","不動產 REITs"] },
+  { key:"type", label:"基金類型",
+    opts:["國內股票型","海外股票型","跨國投資多重資產型","海外債券型","組合型"] },
+  { key:"region", label:"投資區域",
+    opts:["台灣","全球","美國","新興市場"] },
+  { key:"cur", label:"計價幣別",
+    opts:["新臺幣","美元","人民幣"] },
+  { key:"rr", label:"風險等級",
+    opts:["RR2","RR3","RR4","RR5"] },
+  { key:"div", label:"配息方式",
+    opts:["累積型","月配型","季配型"] }
+];
+
+/* ===== 基金示意資料 ===== */
+const FUNDS = [
+  { name:"玉山科技島基金", code:"08", type:"國內股票型", region:"台灣", cur:"新臺幣", rr:"RR5", div:"累積型",
+    ind:["科技","半導體","AI 人工智慧"],
+    date:"2026/07/03", nav:"213.54", chg:"+3.00", pct:"+1.42%", up:true,
+    perf:["51.99%","114.60%","262.98%","231.64%","1997.30%"] },
+  { name:"玉山中小型股基金", code:"T1", type:"國內股票型", region:"台灣", cur:"新臺幣", rr:"RR5", div:"累積型",
+    ind:["科技","AI 人工智慧"],
+    date:"2026/07/03", nav:"340.37", chg:"+1.70", pct:"+0.50%", up:true,
+    perf:["51.88%","120.57%","248.58%","254.52%","3371.50%"] },
+  { name:"玉山高成長基金", code:"26", type:"國內股票型", region:"台灣", cur:"新臺幣", rr:"RR5", div:"累積型",
+    ind:["科技","半導體"],
+    date:"2026/07/03", nav:"128.42", chg:"+1.12", pct:"+0.88%", up:true,
+    perf:["36.2%","78.4%","152.6%","168.9%","986.4%"] },
+  { name:"玉山全球基礎建設基金", code:"27", type:"海外股票型", region:"全球", cur:"新臺幣", rr:"RR4", div:"季配型",
+    ind:["基礎建設","能源資源"],
+    date:"2026/07/02", nav:"23.73", chg:"+0.40", pct:"+1.71%", up:true,
+    perf:["-3.80%","7.86%","22.66%","28.75%","130.60%"] },
+  { name:"玉山全球醫療生化基金", code:"22", type:"海外股票型", region:"全球", cur:"新臺幣", rr:"RR4", div:"累積型",
+    ind:["醫療生技"],
+    date:"2026/07/02", nav:"41.86", chg:"-0.22", pct:"-0.52%", up:false,
+    perf:["4.2%","9.8%","15.4%","21.7%","208.3%"] },
+  { name:"玉山全球資源基金", code:"31", type:"海外股票型", region:"全球", cur:"新臺幣", rr:"RR4", div:"累積型",
+    ind:["能源資源"],
+    date:"2026/07/02", nav:"18.94", chg:"+0.31", pct:"+1.66%", up:true,
+    perf:["8.6%","14.2%","19.8%","12.4%","96.5%"] },
+  { name:"玉山全球生態友善ESG多重資產基金", code:"R1", type:"跨國投資多重資產型", region:"全球", cur:"新臺幣", rr:"RR3", div:"月配型",
+    ind:["ESG 永續","基礎建設"],
+    date:"2026/07/02", nav:"16.1618", chg:"-0.2627", pct:"-1.60%", up:false,
+    perf:["11.05%","20.62%","38.03%","34.27%","62.77%"] },
+  { name:"玉山美國投資級企業債券基金", code:"45", type:"海外債券型", region:"美國", cur:"美元", rr:"RR2", div:"月配型",
+    ind:["金融"],
+    date:"2026/07/02", nav:"9.86", chg:"+0.01", pct:"+0.10%", up:true,
+    perf:["1.6%","3.1%","6.8%","9.2%","18.4%"] },
+  { name:"玉山新興市場企業債券基金", code:"52", type:"海外債券型", region:"新興市場", cur:"美元", rr:"RR3", div:"月配型",
+    ind:["金融"],
+    date:"2026/07/02", nav:"10.42", chg:"-0.03", pct:"-0.29%", up:false,
+    perf:["2.1%","4.0%","8.2%","11.6%","21.9%"] },
+  { name:"玉山多元收益組合基金", code:"38", type:"組合型", region:"全球", cur:"新臺幣", rr:"RR3", div:"月配型",
+    ind:[],
+    date:"2026/07/02", nav:"12.34", chg:"+0.03", pct:"+0.24%", up:true,
+    perf:["2.8%","5.4%","9.6%","13.1%","32.6%"] }
+];
+
+let view="nav";
+/* 各群組已勾選集合 */
+const picked = {};
+FILTERS.forEach(f=>picked[f.key]=new Set());
+
+/* 篩選群組收合狀態：初次進入預設收合，僅顯示輸入框及前兩項篩選群組(1) */
+let groupsExpanded = false;
+
+/* ===== 快速搜尋 autocomplete（名稱／代號） ===== */
+let hl = -1, acItems = [];
+const norm = s => (s||"").trim().toLowerCase();
+const matchQ = (f,q) => f.name.toLowerCase().includes(q) || f.code.toLowerCase().includes(q);
+function esc(s){ return s.replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function hlText(text,q){
+  const i = text.toLowerCase().indexOf(q);
+  if(i<0) return esc(text);
+  return esc(text.slice(0,i)) + "<b>" + esc(text.slice(i,i+q.length)) + "</b>" + esc(text.slice(i+q.length));
+}
+function onQuery(){
+  const box=document.getElementById("si"), ac=document.getElementById("ac");
+  const q=norm(document.getElementById("q").value);
+  box.classList.toggle("has", q.length>0);
+  hl=-1;
+  if(!q){ ac.classList.remove("open"); renderTable(); return; }
+  acItems = FUNDS.filter(f=>matchQ(f,q)).slice(0,8);
+  ac.innerHTML = acItems.length
+    ? acItems.map((f,i)=>`<li onmousedown="pick(${i});event.preventDefault()">
+        <span>${hlText(f.name,q)}</span><span class="cd">代號 ${hlText(f.code,q)}</span></li>`).join("")
+    : `<div class="no">查無符合的基金名稱或代號</div>`;
+  ac.classList.add("open");
+  renderTable();
+}
+function pick(i){
+  const f=acItems[i];
+  document.getElementById("q").value=f.name;
+  document.getElementById("ac").classList.remove("open");
+  document.getElementById("si").classList.add("has");
+  renderTable();
+}
+function onKey(e){
+  const ac=document.getElementById("ac");
+  if(!ac.classList.contains("open")){ if(e.key==="Enter") renderTable(); return; }
+  const lis=[...ac.querySelectorAll("li")];
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"){
+    e.preventDefault();
+    hl = e.key==="ArrowDown" ? Math.min(hl+1,lis.length-1) : Math.max(hl-1,0);
+    lis.forEach((li,i)=>li.classList.toggle("hl",i===hl));
+  }else if(e.key==="Enter"){
+    e.preventDefault();
+    if(hl>=0 && acItems[hl]) pick(hl); else ac.classList.remove("open"), renderTable();
+  }else if(e.key==="Escape"){
+    ac.classList.remove("open");
+  }
+}
+function clearQ(){
+  document.getElementById("q").value="";
+  document.getElementById("si").classList.remove("has");
+  document.getElementById("ac").classList.remove("open");
+  renderTable();
+}
+document.addEventListener("click",e=>{
+  if(!document.getElementById("si").contains(e.target))
+    document.getElementById("ac").classList.remove("open");
+});
+
+/* ===== 篩選群組渲染 =====
+   需求(1)：初次進入預設收合，僅顯示輸入框及前兩項篩選值（依產業別／基金類型），
+   其餘群組（投資區域／計價幣別／風險等級／配息方式）收合於「展開更多篩選條件」之後 */
+function renderGroups(){
+  const visible = groupsExpanded ? FILTERS : FILTERS.slice(0,2);
+  const groupsHtml = visible.map(g=>`
+    <div class="f-group">
+      <div class="g-ttl">${g.label}${g.isNew?'<span class="new-tag">NEW</span>':''}
+        <span class="sub">可複選${g.isNew?'（後台維護）':''}</span></div>
+      <div class="chk-row">
+        ${g.opts.map(o=>`
+          <label class="chk ${picked[g.key].has(o)?'on':''}" onclick="toggleOpt('${g.key}','${o}');event.preventDefault()">
+            <span class="box">${picked[g.key].has(o)?'✓':''}</span>${o}
+          </label>`).join("")}
+      </div>
+    </div>`).join("");
+
+  const hiddenCount = FILTERS.length - 2;
+  const toggleHtml = hiddenCount>0 ? `
+    <div class="f-toggle">
+      <button class="btn-toggle" onclick="toggleGroups()">
+        ${groupsExpanded ? "收合篩選條件 ▲" : `展開更多篩選條件（尚有 ${hiddenCount} 項）▾`}
+      </button>
+    </div>` : "";
+
+  document.getElementById("filterGroups").innerHTML = groupsHtml + toggleHtml;
+}
+function toggleGroups(){
+  groupsExpanded = !groupsExpanded;
+  renderGroups();
+}
+function toggleOpt(key,opt){
+  picked[key].has(opt) ? picked[key].delete(opt) : picked[key].add(opt);
+  renderGroups(); renderTable();
+}
+function clearAll(){
+  FILTERS.forEach(f=>picked[f.key].clear());
+  document.getElementById("q").value="";
+  document.getElementById("si").classList.remove("has");
+  document.getElementById("ac").classList.remove("open");
+  renderGroups(); renderTable();
+}
+
+/* ===== 篩選邏輯：群組內 OR、群組間 AND，未勾＝不限（收合中的群組若先前已勾選，篩選條件仍生效）===== */
+function filtered(){
+  const q = norm(document.getElementById("q").value);
+  return FUNDS.filter(f=>{
+    if(q && !matchQ(f,q)) return false;
+    for(const g of FILTERS){
+      const set=picked[g.key];
+      if(!set.size) continue;
+      if(g.multiField){
+        if(!f.ind.some(i=>set.has(i))) return false;
+      }else{
+        if(!set.has(f[g.key])) return false;
+      }
+    }
+    return true;
+  });
+}
+
+/* ===== 頁籤切換 ===== */
+function swView(v){
+  view=v;
+  document.getElementById("rtNav").classList.toggle("active",v==="nav");
+  document.getElementById("rtPerf").classList.toggle("active",v==="perf");
+  renderTable();
+}
+
+/* ===== 表格 ===== */
+const OPS = `<button class="b-op s">申購</button><button class="b-op">追蹤</button><button class="b-op">比較</button>`;
+function indTags(f){
+  return f.ind.length
+    ? f.ind.map(i=>`<span class="itag">${i}</span>`).join("")
+    : `<span class="itag none">—</span>`;
+}
+function renderTable(){
+  const rows=filtered();
+  document.getElementById("cnt").textContent=rows.length;
+  const tbl=document.getElementById("tbl");
+  document.getElementById("empty").style.display = rows.length? "none":"";
+  if(!rows.length){ tbl.innerHTML=""; return; }
+
+  if(view==="nav"){
+    tbl.innerHTML = `
+      <tr><th>基金名稱／產業別</th><th>基金類型</th><th>淨值日期</th>
+          <th class="num">最新淨值</th><th class="num">漲跌</th><th class="num">漲跌幅</th><th class="op">操作</th></tr>` +
+      rows.map(f=>`
+      <tr>
+        <td><div class="fname">${f.name}<span style="font-size:11.5px;color:var(--gray);font-weight:400;margin-left:6px">（${f.code}）</span></div>${indTags(f)}</td>
+        <td style="color:var(--gray);font-size:12.5px">${f.type}</td>
+        <td style="color:var(--gray);font-size:12.5px">${f.date}</td>
+        <td class="num" style="font-weight:800">${f.nav}</td>
+        <td class="num ${f.up?'up':'down'}">${f.up?'▲':'▼'} ${f.chg.replace(/^[+-]/,'')}</td>
+        <td class="num ${f.up?'up':'down'}">${f.up?'▲':'▼'} ${f.pct.replace(/^[+-]/,'')}</td>
+        <td class="op">${OPS}</td>
+      </tr>`).join("");
+  }else{
+    tbl.innerHTML = `
+      <tr><th>基金名稱／產業別</th><th class="num">三個月</th><th class="num">六個月</th>
+          <th class="num">一年</th><th class="num">二年</th><th class="num">成立至今</th><th class="op">操作</th></tr>` +
+      rows.map(f=>`
+      <tr>
+        <td><div class="fname">${f.name}<span style="font-size:11.5px;color:var(--gray);font-weight:400;margin-left:6px">（${f.code}）</span></div>${indTags(f)}</td>
+        ${f.perf.map(p=>`<td class="num ${p.startsWith('-')?'down':'up'}">${p}</td>`).join("")}
+        <td class="op">${OPS}</td>
+      </tr>`).join("");
+  }
+}
+
+renderGroups(); renderTable();
+</script>
+</body>
+</html>

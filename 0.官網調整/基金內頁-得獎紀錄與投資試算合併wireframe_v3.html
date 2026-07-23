@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>基金內頁｜得獎紀錄＋投資試算 合併 Wireframe（fundNo=GRESA 真實資料）</title>
+<style>
+:root{
+  --green:#00A19B;
+  --green-dark:#00726E;
+  --green-tint:#E6F6F5;
+  --ink:#333B40;
+  --gray:#8A939B;
+  --line:#DDE2E6;
+  --ph:#EDF0F2;
+  --ph-line:#C9D1D7;
+  --red:#D0342C;
+  --amber:#E8620C;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",sans-serif;
+  color:var(--ink);background:#FAFBFC;line-height:1.6}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+.ph{background:var(--ph);border:1px dashed var(--ph-line);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:13px}
+.new-tag{display:inline-block;background:var(--amber);color:#fff;font-size:11px;font-weight:700;
+  padding:1px 9px;border-radius:999px;vertical-align:2px;margin-left:8px;letter-spacing:1px}
+.demo-bar{background:#FFF7EF;border-bottom:1px solid #F1DCC5;color:var(--amber);
+  font-size:12.5px;text-align:center;padding:8px 12px;line-height:1.6}
+
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
+.hd{max-width:1120px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:26px;height:60px}
+.logo{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:800;color:var(--green);white-space:nowrap}
+.logo .mt{width:26px;height:22px;background:var(--green);clip-path:polygon(50% 0,100% 100%,0 100%);border-radius:2px}
+nav{display:flex;gap:24px;flex:1}
+nav a{font-size:14.5px;padding:4px 0;border-bottom:2px solid transparent}
+nav a:hover{color:var(--green);border-bottom-color:var(--green)}
+.btn-trade{background:var(--green);color:#fff;font-size:13.5px;font-weight:700;border:none;
+  padding:8px 20px;border-radius:999px;margin-left:auto}
+
+.crumb{font-size:12.5px;color:var(--gray);padding:16px 0 0}
+.crumb b{color:var(--ink);font-weight:600}
+
+/* 基金標題列 */
+.fund-head{padding:14px 0 18px;border-bottom:1px solid var(--line)}
+.fund-head h1{font-size:21px;font-weight:800;margin-bottom:10px}
+.fh-act{display:flex;gap:10px;margin-bottom:16px}
+.btn-o{border:1.5px solid var(--green);background:#fff;color:var(--green);font-size:12.5px;
+  font-weight:700;padding:6px 16px;border-radius:8px}
+.nav-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.nv-item .lb{font-size:11px;color:var(--gray)}
+.nv-item .v{font-size:17px;font-weight:800;margin-top:2px}
+.nv-item .v small{font-size:11px;font-weight:400;color:var(--gray)}
+.nv-item .d{font-size:10.5px;color:var(--gray);margin-top:2px}
+.up{color:var(--red)}
+
+/* 內頁頁籤 */
+.ftabs{display:flex;gap:4px;border-bottom:2px solid var(--line);margin-top:18px;flex-wrap:wrap}
+.ftab{border:none;background:transparent;color:var(--gray);font-size:14px;font-weight:700;
+  padding:10px 18px;border-bottom:3px solid transparent;margin-bottom:-2px}
+.ftab:hover{color:var(--green)}
+.ftab.active{color:var(--green-dark);border-bottom-color:var(--green)}
+
+/* 內容區塊 */
+.sec{padding:22px 0}
+.sec h2{font-size:17px;font-weight:800;margin-bottom:12px}
+.sec ul{padding-left:18px;font-size:13.5px;color:var(--ink)}
+.sec ul li{margin-bottom:6px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px}
+.info-row{display:flex;justify-content:space-between;font-size:13.5px;padding:8px 0;border-bottom:1px dashed var(--ph-line)}
+.info-row .k{color:var(--gray)}
+.info-row .v{font-weight:700}
+
+/* 檔案下載 */
+.dl-row{display:flex;flex-wrap:wrap;gap:10px}
+.dl-chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;
+  border-radius:8px;padding:9px 16px;font-size:13px;font-weight:700;color:var(--ink)}
+.dl-chip:hover{border-color:var(--green);color:var(--green-dark)}
+.dl-chip .ic{width:16px;height:16px;border-radius:3px;background:var(--ph);border:1px dashed var(--ph-line)}
+
+/* ===== 得獎紀錄 ===== */
+.award-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin-bottom:10px}
+.award-card:last-child{margin-bottom:0}
+.award-card:hover{border-color:var(--green)}
+.a-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.a-year{background:var(--green-tint);color:var(--green-dark);font-size:12.5px;font-weight:800;
+  border-radius:6px;padding:2px 9px}
+.a-org{font-size:14.5px;font-weight:800;color:var(--ink)}
+.a-src{margin-left:auto;font-size:11px;color:var(--gray)}
+.award-list{list-style:none;display:flex;flex-direction:column;gap:4px}
+.award-list li{font-size:13px;color:var(--ink);padding-left:12px;position:relative}
+.award-list li::before{content:"–";position:absolute;left:0;top:0;color:var(--ph-line)}
+.award-empty{padding:20px;text-align:center;color:var(--gray);font-size:13px}
+
+/* ===== 投資試算（新增頁籤） ===== */
+.calc{display:grid;grid-template-columns:320px 1fr;gap:22px;padding:22px 0;align-items:start}
+.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px}
+.panel h2{font-size:16px;font-weight:800;margin-bottom:16px}
+.mode{display:inline-flex;border:1px solid var(--line);border-radius:999px;background:#fff;padding:3px;margin-bottom:20px}
+.mode button{border:none;background:transparent;color:var(--gray);font-size:13px;font-weight:700;
+  padding:8px 20px;border-radius:999px}
+.mode button.active{background:var(--green);color:#fff}
+.fld{margin-bottom:16px}
+.fld label{display:block;font-size:12.5px;color:var(--gray);margin-bottom:6px}
+.fld .in{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:8px;
+  padding:0 12px;background:#fff}
+.fld .in:focus-within{border-color:var(--green)}
+.fld input,.fld select{flex:1;border:none;outline:none;font-size:14.5px;font-family:inherit;
+  height:42px;color:var(--ink);min-width:0;background:transparent}
+.fld .unit{font-size:12.5px;color:var(--gray)}
+.hint{font-size:11.5px;color:#AEB6BD;margin-top:4px}
+.btn-calc{width:100%;background:var(--green);color:#fff;font-size:15px;font-weight:700;border:none;
+  height:46px;border-radius:8px;margin-top:6px}
+.btn-calc:hover{background:var(--green-dark)}
+.result h2{display:flex;align-items:center;gap:8px}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0 18px}
+.res-item{background:var(--green-tint);border:1px solid #BFE5E3;border-radius:10px;padding:16px 18px}
+.res-item .lb{font-size:12px;color:var(--gray)}
+.res-item .v{font-size:22px;font-weight:800;color:var(--green-dark);line-height:1.2;margin-top:2px}
+.res-item .v.up{color:var(--red)}
+.res-item .v small{font-size:12px;font-weight:400;color:var(--gray)}
+.chart-ph{height:220px;margin-bottom:14px;position:relative}
+.chart-ph svg{position:absolute;inset:0;width:100%;height:100%}
+.chart-cap{position:absolute;left:12px;top:10px;font-size:12px;color:var(--gray)}
+.legend{display:flex;gap:18px;font-size:12px;color:var(--gray);margin-bottom:14px}
+.legend i{display:inline-block;width:18px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+.disclaim{background:#F5F7F8;border:1px dashed var(--ph-line);border-radius:8px;
+  padding:14px 16px;font-size:12px;color:var(--gray);line-height:1.7}
+.disclaim b{color:var(--ink)}
+
+/* 尚未實作頁籤佔位 */
+.empty-tab{padding:60px 0}
+.empty-tab .ph{height:200px}
+
+/* 基金績效示意表格 */
+.perf-tbl{width:100%;border-collapse:collapse;margin-top:4px}
+.perf-tbl th{background:#F5F7F8;color:var(--gray);font-weight:600;font-size:12px;
+  padding:8px 6px;border:1px solid var(--line)}
+.perf-tbl td{font-size:13.5px;font-weight:700;text-align:center;padding:8px 6px;border:1px solid var(--line)}
+
+footer{background:#fff;border-top:1px solid var(--line);padding:24px 0;margin-top:20px}
+footer p{font-size:11.5px;color:#AEB6BD;line-height:1.7}
+
+@media (max-width:760px){
+  nav{display:none}
+  .nav-grid{grid-template-columns:repeat(2,1fr)}
+  .info-grid{grid-template-columns:1fr}
+  .a-src{margin-left:0;width:100%}
+  .calc{grid-template-columns:1fr}
+  .res-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd">
+    <a class="logo" href="#"><span class="mt"></span>玉山投信</a>
+    <nav>
+      <a href="#">基金中心</a><a href="#">ETF專區</a><a href="#">投資觀點</a>
+      <a href="#">客戶服務</a><a href="#">關於我們</a>
+    </nav>
+    <button class="btn-trade">線上交易</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb">首頁 ＞ 基金中心 ＞ 淨值/績效 ＞ <b>PGIM全球精選不動產證券基金</b></div>
+
+  <div class="fund-head">
+    <h1>PGIM全球精選不動產證券基金－A 級別 (美元累積型)</h1>
+    <div class="fh-act">
+      <button class="btn-o">加入追蹤基金</button>
+      <button class="btn-o">加入比一比</button>
+    </div>
+    <div class="nav-grid">
+      <div class="nv-item"><div class="lb">最新淨值（2026/07/15）</div><div class="v">160.578<small> 美元</small></div></div>
+      <div class="nv-item"><div class="lb">漲跌（漲跌幅）</div><div class="v up">0.119 <small>/ 0.07%</small></div></div>
+      <div class="nv-item"><div class="lb">歷史淨值最低</div><div class="v">77.495</div><div class="d">2020/03/23</div></div>
+      <div class="nv-item"><div class="lb">歷史淨值最高</div><div class="v">161.781</div><div class="d">2026/07/07</div></div>
+    </div>
+    <div class="ftabs">
+      <button class="ftab active">基金介紹</button>
+      <button class="ftab">績效淨值</button>
+      <button class="ftab">投資組合</button>
+      <button class="ftab">配息記錄</button>
+      <button class="ftab" id="tabBtnCalc" onclick="toggleCalc()">投資試算<span class="new-tag">NEW</span></button>
+    </div>
+  </div>
+
+  <!-- ===== 新增：投資試算（點選上方「投資試算」頁籤展開） ===== -->
+  <div class="sec" id="tab-calc" style="display:none">
+    <h2>投資試算<span class="new-tag">NEW</span></h2>
+    <div class="calc">
+      <!-- 左：輸入 -->
+      <div class="panel">
+        <h2>投資試算</h2>
+        <div class="mode">
+          <button class="active" id="mLump" onclick="swMode('lump')">單筆申購</button>
+          <button id="mRsp" onclick="swMode('rsp')">定期定額</button>
+        </div>
+
+        <div class="fld">
+          <label id="amtLabel">投資金額</label>
+          <div class="in"><input id="amt" type="text" value="100,000"><span class="unit">美元</span></div>
+          <div class="hint" id="amtHint">單筆最低申購金額 US$1,000（示意）</div>
+        </div>
+        <div class="fld" id="fldDay" style="display:none">
+          <label>每月扣款日</label>
+          <div class="in">
+            <select id="day"><option>6 日</option><option>16 日</option><option>26 日</option></select>
+          </div>
+        </div>
+        <div class="fld">
+          <label>申購（開始扣款）日期</label>
+          <div class="in"><input id="dFrom" type="text" value="2023/07/01"></div>
+        </div>
+        <div class="fld">
+          <label>贖回（試算截止）日期</label>
+          <div class="in"><input id="dTo" type="text" value="2026/07/01"></div>
+        </div>
+        <button class="btn-calc" onclick="calc()">開始試算</button>
+      </div>
+
+      <!-- 右：結果 -->
+      <div class="panel result">
+        <h2>試算結果 <span style="font-size:12px;color:var(--gray);font-weight:400">（示意數值）</span></h2>
+        <div class="res-grid">
+          <div class="res-item"><div class="lb" id="rInLb">投入本金</div><div class="v" id="rIn">US$ 100,000</div></div>
+          <div class="res-item"><div class="lb">期末資產</div><div class="v" id="rOut">US$ 138,420</div></div>
+          <div class="res-item"><div class="lb">累積報酬率</div><div class="v up" id="rPct">▲ 38.42%</div></div>
+        </div>
+
+        <div class="chart-ph">
+          <span class="chart-cap">資產走勢（示意圖表）</span>
+          <svg viewBox="0 0 600 220" preserveAspectRatio="none">
+            <line x1="40" y1="190" x2="580" y2="190" stroke="#C9D1D7" stroke-width="1"/>
+            <line x1="40" y1="20"  x2="40"  y2="190" stroke="#C9D1D7" stroke-width="1"/>
+            <path id="lineCost"  d="" fill="none" stroke="#AEB6BD" stroke-width="2" stroke-dasharray="6 4"/>
+            <path id="lineAsset" d="" fill="none" stroke="#00A19B" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="legend">
+          <span><i style="background:#00A19B"></i>資產價值</span>
+          <span><i style="background:#AEB6BD"></i>投入本金</span>
+        </div>
+
+        <div class="disclaim">
+          <b>試算說明：</b>本試算依基金歷史淨值計算，僅供參考，不代表未來績效之保證；基金申購前應詳閱公開說明書。<br>
+          <b>計算邏輯分工：</b>單筆申購／定期定額之計算邏輯由玉山提供，新達依邏輯計算（配息是否再投入、手續費假設等規格待確認）。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 基金介紹（原頁面內容，含得獎紀錄） ===== -->
+  <div id="tab-intro">
+    <div class="sec">
+      <h2>基金特色</h2>
+      <ul>
+        <li>本基金為股票型基金，主要投資於全球的不動產公司股票及權益證券，追求長期資本增長與收益。</li>
+        <li>投資策略採取價值型投資法，藉由分析不動產資產現金流以及公司股利之穩定性與成長性，判斷不動產資產的基本價值。</li>
+        <li>全球化佈局，以美歐及亞洲為主，分散投資並靈活操作，有效降低投資組合風險。</li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <h2>基本資料</h2>
+      <div class="info-grid">
+        <div class="info-row"><span class="k">成立日期</span><span class="v">2016/04/08</span></div>
+        <div class="info-row"><span class="k">主要投資區域</span><span class="v">全球</span></div>
+        <div class="info-row"><span class="k">投資標的</span><span class="v">境外股票型</span></div>
+        <div class="info-row"><span class="k">計價幣別</span><span class="v">美元</span></div>
+        <div class="info-row"><span class="k">收益分配方式</span><span class="v">累積型</span></div>
+        <div class="info-row"><span class="k">風險收益等級</span><span class="v">RR4</span></div>
+        <div class="info-row"><span class="k">經理費</span><span class="v">最高1.05%／年</span></div>
+        <div class="info-row"><span class="k">保管費</span><span class="v">0.025%</span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2>主要風險</h2>
+      <ul>
+        <li>本基金主要投資不動產公司股票及權益證券，故主要有股票風險、不動產風險及REIT風險等。</li>
+        <li>本基金投資於全球，可能因國家或政治變動面臨相當風險。</li>
+        <li>本基金淨資產價值可能產生較大波動，不適合無法承擔相關風險的投資人。</li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <h2>檔案下載</h2>
+      <div class="dl-row">
+        <a class="dl-chip"><span class="ic"></span>公開說明書</a>
+        <a class="dl-chip"><span class="ic"></span>月報</a>
+        <a class="dl-chip"><span class="ic"></span>投資人須知</a>
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2>得獎紀錄<span class="new-tag">NEW</span></h2>
+      <div id="awardList"></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>本頁為系統改版之前台功能線框示意，「基金特色」「基本資料」「主要風險」「檔案下載」內容取材自玉山投信官網現行頁面，「得獎紀錄」資料同步取自官網「得獎紀錄」頁面中屬於本基金之紀錄；「投資試算」為本次新增頁籤，試算內容僅供版面示意，非投資建議。正式上線後由後台統一維護，實際內容以正式網站為準。玉山投信獨立經營管理。</p>
+  </div>
+</footer>
+
+<script>
+/* 得獎紀錄：僅列出屬於本基金（fundNo=GRESA）之紀錄，取自 esunam.com 官網「得獎紀錄」頁面 */
+const FUND_AWARDS = [
+  { year:"2025", org:"LSEG理柏台灣基金獎", src:"Lipper(2025/4)",
+    awards:["環球房地產股票五年期獎"] },
+  { year:"2024", org:"LSEG理柏台灣基金獎", src:"Lipper(2024/4)",
+    awards:["環球房地產股票三年期獎"] }
+];
+function renderAwards(){
+  const box = document.getElementById("awardList");
+  if(!FUND_AWARDS.length){ box.innerHTML = `<div class="ph award-empty">本基金暫無得獎紀錄</div>`; return; }
+  box.innerHTML = FUND_AWARDS.map(g => `
+    <div class="award-card">
+      <div class="a-head">
+        <span class="a-year">${g.year}</span>
+        <span class="a-org">${g.org}</span>
+        <span class="a-src">資料來源　${g.src}</span>
+      </div>
+      <ul class="award-list">${g.awards.map(a=>`<li>${a}</li>`).join("")}</ul>
+    </div>`).join("");
+}
+renderAwards();
+
+/* 投資試算頁籤：點選展開／收合，其餘頁籤與內容不受影響 */
+function toggleCalc(){
+  const el = document.getElementById("tab-calc");
+  const btn = document.getElementById("tabBtnCalc");
+  const show = el.style.display === "none";
+  el.style.display = show ? "" : "none";
+  btn.classList.toggle("active", show);
+}
+
+/* 投資試算：模式切換 */
+let mode="lump";
+function swMode(m){
+  mode=m;
+  document.getElementById("mLump").classList.toggle("active",m==="lump");
+  document.getElementById("mRsp").classList.toggle("active",m==="rsp");
+  document.getElementById("amtLabel").textContent = m==="lump" ? "投資金額" : "每月扣款金額";
+  document.getElementById("amt").value = m==="lump" ? "100,000" : "1,000";
+  document.getElementById("amtHint").textContent = m==="lump"
+    ? "單筆最低申購金額 US$1,000（示意）" : "定期定額最低扣款金額 US$100（示意）";
+  document.getElementById("fldDay").style.display = m==="rsp" ? "" : "none";
+  document.getElementById("rInLb").textContent = m==="lump" ? "投入本金" : "累積投入本金";
+  calc();
+}
+
+/* 示意試算：以 demo 年化報酬率模擬（正式版依玉山計算規格） */
+const DEMO_ANNUAL = 0.1142; /* 依不動產證券基金近三年示意 */
+const fmt = n => "US$ " + Math.round(n).toLocaleString("zh-TW");
+function parseAmt(){ return parseFloat(document.getElementById("amt").value.replace(/,/g,"")) || 0; }
+function yearsBetween(){
+  const f=new Date(document.getElementById("dFrom").value.replace(/\//g,"-"));
+  const t=new Date(document.getElementById("dTo").value.replace(/\//g,"-"));
+  const y=(t-f)/31557600000;
+  return isFinite(y)&&y>0 ? y : 3;
+}
+function calc(){
+  const amt=parseAmt(), yrs=yearsBetween(), months=Math.round(yrs*12);
+  let invested, final;
+  const pts=[], cost=[];
+  if(mode==="lump"){
+    invested=amt;
+    final=amt*Math.pow(1+DEMO_ANNUAL,yrs);
+    for(let i=0;i<=40;i++){
+      const t=yrs*i/40;
+      pts.push(amt*Math.pow(1+DEMO_ANNUAL,t));
+      cost.push(amt);
+    }
+  }else{
+    invested=amt*months;
+    const mr=Math.pow(1+DEMO_ANNUAL,1/12)-1;
+    let v=0; final=0;
+    const step=Math.max(1,Math.round(months/40));
+    for(let m=1;m<=months;m++){
+      v=(v+amt)*(1+mr);
+      if(m%step===0||m===months){ pts.push(v); cost.push(amt*m); }
+    }
+    final=v;
+  }
+  const pct=(final/invested-1)*100;
+  document.getElementById("rIn").textContent=fmt(invested);
+  document.getElementById("rOut").textContent=fmt(final);
+  const up=pct>=0;
+  const el=document.getElementById("rPct");
+  el.textContent=(up?"▲ ":"▼ ")+Math.abs(pct).toFixed(2)+"%";
+  el.className="v "+(up?"up":"");
+  drawChart(pts,cost);
+}
+function drawChart(pts,cost){
+  const max=Math.max(...pts,...cost)*1.05;
+  const X=i=>40+540*i/(pts.length-1);
+  const Y=v=>190-170*(v/max);
+  const d=a=>a.map((v,i)=>(i?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)).join(" ");
+  document.getElementById("lineAsset").setAttribute("d",d(pts));
+  document.getElementById("lineCost").setAttribute("d",d(cost));
+}
+calc();
+</script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>關於我們｜得獎紀錄 Wireframe（V7 年度時間軸＋基金篩選）</title>
+<style>
+:root{
+  --green:#00A19B;
+  --green-dark:#00726E;
+  --green-tint:#E6F6F5;
+  --ink:#333B40;
+  --gray:#8A939B;
+  --line:#DDE2E6;
+  --ph:#EDF0F2;
+  --ph-line:#C9D1D7;
+  --red:#D0342C;
+  --amber:#E8620C;
+  --gold:#C99A3C;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",sans-serif;
+  color:var(--ink);background:#FAFBFC;line-height:1.6}
+a{color:inherit;text-decoration:none}
+button,select{font-family:inherit;cursor:pointer}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.ph{background:var(--ph);border:1px dashed var(--ph-line);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:13px}
+.chg-tag{display:inline-block;background:var(--green-dark);color:#fff;font-size:11px;font-weight:700;
+  padding:1px 9px;border-radius:999px;vertical-align:2px;margin-left:8px;letter-spacing:1px}
+
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
+.hd{max-width:1120px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:26px;height:60px}
+.logo{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:800;color:var(--green);white-space:nowrap}
+.logo .mt{width:26px;height:22px;background:var(--green);clip-path:polygon(50% 0,100% 100%,0 100%);border-radius:2px}
+nav{display:flex;gap:24px;flex:1}
+nav a{font-size:14.5px;padding:4px 0;border-bottom:2px solid transparent}
+nav a:hover,nav a.cur{color:var(--green);border-bottom-color:var(--green)}
+.btn-trade{background:var(--green);color:#fff;font-size:13.5px;font-weight:700;border:none;
+  padding:8px 20px;border-radius:999px;margin-left:auto}
+
+.crumb{font-size:12.5px;color:var(--gray);padding:18px 0 0}
+.crumb b{color:var(--ink);font-weight:600}
+
+.pg-hd{text-align:center;padding:28px 0 8px}
+.pg-hd h1{font-size:26px;font-weight:800;color:var(--green-dark)}
+.pg-hd p{font-size:13.5px;color:var(--gray);margin-top:8px}
+
+/* ===== V7：左右兩欄版型 ===== */
+.page-layout{display:flex;gap:36px;align-items:flex-start;padding:24px 0 40px}
+
+.timeline-side{width:150px;flex:none;position:sticky;top:80px}
+.timeline-title{font-size:12px;font-weight:700;color:var(--gray);letter-spacing:1px;padding-bottom:14px}
+.timeline-list{list-style:none;position:relative;padding-left:16px;border-left:2px solid var(--line)}
+.timeline-list li{position:relative;margin-bottom:22px}
+.timeline-list li::before{content:"";position:absolute;left:-21px;top:3px;width:9px;height:9px;
+  border-radius:50%;background:#fff;border:2px solid var(--ph-line)}
+.timeline-list li.active::before{background:var(--green);border-color:var(--green)}
+.timeline-list li.disabled::before{background:var(--ph);border-color:var(--ph-line)}
+.timeline-list a{font-size:15px;font-weight:700;color:var(--gray)}
+.timeline-list li.active a{color:var(--green-dark);font-size:17px}
+.timeline-list li.disabled a{color:var(--ph-line);pointer-events:none}
+.timeline-list a:hover{color:var(--green)}
+
+.content-side{flex:1;min-width:0}
+
+.filter-row{display:flex;justify-content:flex-end;align-items:center;gap:10px;padding-bottom:16px}
+.filter-row .f-label{font-size:12.5px;color:var(--gray)}
+.fund-select{position:relative}
+.fund-select select{appearance:none;border:1px solid var(--line);background:#fff;border-radius:8px;
+  padding:9px 34px 9px 16px;font-size:14px;font-weight:700;color:var(--ink);max-width:340px}
+.fund-select::after{content:"▾";position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  color:var(--gray);pointer-events:none;font-size:12px}
+
+.yr-section{scroll-margin-top:90px;margin-bottom:28px}
+.yr-section-hd{display:flex;align-items:center;gap:10px;padding-bottom:12px}
+.yr-section-hd .num{font-size:22px;font-weight:800;color:var(--green-dark)}
+.yr-section-hd .cnt{font-size:12px;color:var(--gray)}
+
+.list{display:flex;flex-direction:column;gap:12px}
+
+.a-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px 22px}
+.a-card:hover{border-color:var(--green)}
+.a-head{display:flex;align-items:baseline;gap:12px;padding-bottom:12px;margin-bottom:4px;
+  border-bottom:1px solid var(--line);flex-wrap:wrap}
+.a-org{font-size:16px;font-weight:800;color:var(--ink)}
+.a-src{margin-left:auto;font-size:11.5px;color:var(--gray)}
+.a-src b{color:var(--gray);font-weight:600}
+
+.fund-entry{padding:14px 0;border-bottom:1px dashed var(--ph-line)}
+.fund-entry:last-child{border-bottom:none}
+.award-list{margin-bottom:8px}
+.award-list ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.award-list li{font-size:13.5px;font-weight:700;color:var(--ink);padding-left:13px;position:relative}
+.award-list li::before{content:"—";position:absolute;left:0;top:0;color:var(--gray);font-weight:400}
+.fund-line{display:flex;align-items:baseline;gap:8px}
+.fund-line a{font-size:13.5px;font-weight:800;color:var(--green-dark)}
+.fund-line a:hover{text-decoration:underline}
+.multi-note{font-size:10.5px;color:var(--gray);font-weight:400}
+
+@media (max-width:820px){
+  nav{display:none}
+  .page-layout{flex-direction:column;gap:18px}
+  .timeline-side{width:100%;position:static;padding-bottom:6px}
+  .timeline-list{display:flex;gap:22px;border-left:none;border-bottom:2px solid var(--line);
+    padding-left:0;padding-bottom:12px;overflow-x:auto}
+  .timeline-list li{margin-bottom:0}
+  .timeline-list li::before{left:50%;top:auto;bottom:-19px;transform:translateX(-50%)}
+  .a-src{margin-left:0;width:100%}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd">
+    <a class="logo" href="#"><span class="mt"></span>玉山投信</a>
+    <nav>
+      <a href="#">基金中心</a><a href="#">ETF專區</a><a href="#">投資觀點</a>
+      <a href="#">客戶服務</a><a href="#" class="cur">關於我們</a><a href="#">玉山服務網</a>
+    </nav>
+    <button class="btn-trade">線上交易</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb">首頁 ＞ 關於我們 ＞ <b>得獎紀錄</b></div>
+
+  <div class="pg-hd">
+    <h1>榮耀的一面</h1>
+    <p>玉山投信研究團隊近年得獎及入圍記錄</p>
+  </div>
+
+  <div class="page-layout">
+    <aside class="timeline-side">
+      <div class="timeline-title">年度時間軸</div>
+      <ul class="timeline-list" id="timelineList"></ul>
+    </aside>
+
+    <div class="content-side">
+      <div class="filter-row">
+        <span class="f-label">依基金篩選</span>
+        <div class="fund-select">
+          <select id="fundFilter" onchange="renderList()">
+            <option value="all">全部基金</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="list" id="list"></div>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#fff;border-top:1px solid var(--line);padding:24px 0;margin-top:10px">
+  <div class="wrap">
+    <p style="font-size:11.5px;color:#AEB6BD;line-height:1.7">本頁為系統改版之前台功能線框示意，內容取材自玉山投信官網現行「得獎紀錄」頁面，僅供版面示意，實際內容以正式網站為準。後台維護欄位：得獎年份、頒獎單位、資料來源、獎項、對應基金；同一頒獎單位／年份／資料來源下，若複數獎項對應同一檔基金，該基金僅顯示一次，獎項以清單合併列出於基金上方。左側年度時間軸依資料實際涵蓋年份自動產生，若篩選後某年度無符合資料則反灰不可點擊。此卡片樣式亦同步用於各基金內頁之「得獎紀錄」頁籤。</p>
+  </div>
+</footer>
+
+<script>
+const AWARD_GROUPS = [
+  { year:"2026", org:"LSEG理柏台灣基金獎", src:"Lipper(2026/4)",
+    funds:[
+      { fund:"玉山全球醫療生化基金(原PGIM保德信全球醫療生化基金)", link:"https://www.esunam.com/Unit/Fund?fundNo=1A&tab=2",
+        awards:["醫療保健股票三年期獎"] }
+    ]},
+  { year:"2026", org:"第二十九屆傑出基金金鑽獎", src:"台北金融研究發展基金會(2026/3)",
+    funds:[
+      { fund:"玉山中小型股基金(原PGIM保德信中小型股基金)", link:"https://www.esunam.com/Unit/Fund?fundNo=T1&tab=2",
+        awards:["傑出基金金鑽獎「國內基金獎」股票型基金－中小型股(包括上櫃型)入圍"] }
+    ]},
+  { year:"2025", org:"LSEG理柏台灣基金獎", src:"Lipper(2025/4)",
+    funds:[
+      { fund:"PGIM全球精選不動產證券基金-A美元累積型", link:"https://www.esunam.com/Unit/Fund?fundNo=GRESA",
+        awards:["環球房地產股票五年期獎"] },
+      { fund:"玉山全球資源基金(原PGIM保德信全球資源基金)", link:"https://www.esunam.com/Unit/Fund?fundNo=26",
+        awards:["主題股票－天然資源3年期獎"] }
+    ]},
+  { year:"2025", org:"第九屆《BENCHMARK》指標台灣基金獎", src:"BENCHMARK(2025/9)",
+    funds:[
+      { fund:"玉山亞太基金(原PGIM保德信亞太基金)", link:"https://www.esunam.com/Unit/Fund?fundNo=04",
+        awards:["「亞洲不包括日本股票」－最佳表現基金《傑出表現》獎"] },
+      { fund:"玉山全球消費商機基金(原PGIM保德信全球消費商機基金)", link:"https://www.esunam.com/Unit/Fund?fundNo=28",
+        awards:["「產業股票－消費品及服務」－最佳表現基金《同級最佳》獎"] },
+      { fund:"玉山策略成長ETF組合基金(原PGIM保德信策略成長ETF組合基金)-新台幣R級別", link:"https://www.esunam.com/Unit/Fund?fundNo=C3",
+        awards:["「新臺幣積極型股債混合」－最佳表現基金《傑出表現》獎"] },
+      { fund:"玉山拉丁美洲基金(原PGIM保德信拉丁美洲基金)", link:"https://www.esunam.com/Unit/Fund?fundNo=30",
+        awards:["「拉丁美洲股票」－最佳表現定期定額基金《同級最佳》獎"] },
+      { fund:"玉山美國投資級企業債券基金(原PGIM保德信美國投資級企業債券基金)-美元月配息型", link:"https://www.esunam.com/Unit/Fund?fundNo=G4",
+        awards:["「美元企業固定收益」－最佳表現定期定額基金《傑出表現》獎"] }
+    ]},
+  { year:"2024", org:"LSEG理柏台灣基金獎", src:"Lipper(2024/4)",
+    funds:[
+      { fund:"PGIM全球精選不動產證券基金-A美元累積型", link:"https://www.esunam.com/Unit/Fund?fundNo=GRESA",
+        awards:["環球房地產股票三年期獎"] }
+    ]},
+  { year:"2024", org:"第八屆《BENCHMARK》指標台灣基金獎", src:"BENCHMARK(2024/4)",
+    funds:[
+      { fund:"玉山全球資源基金(原PGIM保德信全球資源基金)", link:"https://www.esunam.com/Unit/Fund?fundNo=26",
+        awards:["「產業股票－自然資源類別」－最佳表現基金大獎《同級最佳》獎","「產業股票－自然資源類別」－最佳表現定期定額基金大獎《同級最佳》獎"] }
+    ]},
+  { year:"2023", org:"第七屆《BENCHMARK》指標台灣基金獎", src:"BENCHMARK(2023/3)",
+    funds:[
+      { fund:"玉山全球資源基金(原PGIM保德信全球資源基金)", link:"https://www.esunam.com/Unit/Fund?fundNo=26",
+        awards:["「產業股票－自然資源類別」－最佳表現定期定額基金大獎《同級最佳》獎"] }
+    ]},
+  { year:"2021", org:"第二十四屆傑出基金金鑽獎", src:"台北金融研究發展基金會(2021/3)",
+    funds:[
+      { fund:"玉山店頭市場基金(原PGIM保德信店頭市場基金)", link:"https://www.esunam.com/Unit/Fund?fundNo=06",
+        awards:["傑出基金金鑽獎三年期上櫃型股－股票型基金得獎"] },
+      { fund:"玉山金平衡基金(原PGIM保德信金平衡基金)", link:"https://www.esunam.com/Unit/Fund?fundNo=N1",
+        awards:["傑出基金金鑽獎三年期價值型股票－債券股票平衡型基金得獎"] },
+      { fund:"玉山高成長基金(原PGIM保德信高成長基金)", link:"https://www.esunam.com/Unit/Fund?fundNo=02",
+        awards:["傑出基金金鑽獎三年期一般類股－股票型基金入圍"] },
+      { fund:"玉山科技島基金(原PGIM保德信科技島基金)", link:"https://www.esunam.com/Unit/Fund?fundNo=08",
+        awards:["傑出基金金鑽獎三年期科技類股－股票型基金入圍"] },
+      { fund:"PGIM美國全方位非投資等級債券基金-I級別(美元累積型)", link:"https://www.esunam.com/Unit/Fund?fundNo=PRUQ",
+        awards:["傑出基金金鑽獎三年期高收益債券基金－債券型基金"] }
+    ]}
+];
+
+// 依資料實際涵蓋年份（由新到舊，去除重複）建立時間軸年度清單
+const ALL_YEARS = [...new Set(AWARD_GROUPS.map(g => g.year))];
+
+// 建立「基金」篩選器選項（去除重複，依字母排序）
+const ALL_FUNDS = [...new Set(AWARD_GROUPS.flatMap(g => g.funds.map(f => f.fund)))].sort((a,b)=>a.localeCompare(b,'zh-Hant'));
+(function initFundOptions(){
+  const sel = document.getElementById("fundFilter");
+  ALL_FUNDS.forEach(name => {
+    const opt = document.createElement("option");
+    opt.value = name;
+    opt.textContent = name;
+    sel.appendChild(opt);
+  });
+})();
+
+let observer = null;
+
+function renderList(){
+  const fundVal = document.getElementById("fundFilter").value;
+
+  // 依基金篩選，過濾每筆資料中的 funds 陣列，若該筆完全無符合則整筆隱藏
+  const filtered = AWARD_GROUPS
+    .map(g => ({ ...g, funds: g.funds.filter(f => fundVal === "all" || f.fund === fundVal) }))
+    .filter(g => g.funds.length > 0);
+
+  // 依年份分組，維持原始（新到舊）排序，同年份的多筆資料歸在同一個年度區塊
+  const yearsWithData = new Set(filtered.map(g => g.year));
+
+  let html = "";
+  ALL_YEARS.forEach(year => {
+    const groupsOfYear = filtered.filter(g => g.year === year);
+    if(groupsOfYear.length === 0) return;
+    html += `
+      <section class="yr-section" id="y-${year}">
+        <div class="yr-section-hd">
+          <span class="num">${year}</span>
+          <span class="cnt">共 ${groupsOfYear.length} 筆</span>
+        </div>
+        <div class="list">
+          ${groupsOfYear.map(g => `
+            <div class="a-card">
+              <div class="a-head">
+                <span class="a-org">${g.org}</span>
+                <span class="a-src"><b>資料來源</b>　${g.src}</span>
+              </div>
+              ${g.funds.map(f => `
+                <div class="fund-entry">
+                  <div class="award-list">
+                    ${f.awards.length>1?'<span class="multi-note">複數獎項，對應下方同一檔基金</span>':''}
+                    <ul>${f.awards.map(a=>`<li>${a}</li>`).join("")}</ul>
+                  </div>
+                  <div class="fund-line">
+                    <a href="${f.link}" target="_blank" rel="noopener">${f.fund} →</a>
+                  </div>
+                </div>`).join("")}
+            </div>`).join("")}
+        </div>
+      </section>`;
+  });
+
+  document.getElementById("list").innerHTML = html || `<div class="ph" style="height:80px">查無符合篩選條件的得獎紀錄</div>`;
+
+  renderTimeline(yearsWithData);
+  setupScrollSpy();
+}
+
+function renderTimeline(yearsWithData){
+  const el = document.getElementById("timelineList");
+  el.innerHTML = ALL_YEARS.map(year => {
+    const enabled = yearsWithData.has(year);
+    return `<li class="${enabled ? "" : "disabled"}" data-year="${year}">
+      <a href="#y-${year}" onclick="return scrollToYear('${year}', event)">${year}</a>
+    </li>`;
+  }).join("");
+}
+
+function scrollToYear(year, e){
+  e.preventDefault();
+  const target = document.getElementById("y-" + year);
+  if(target) target.scrollIntoView({behavior:"smooth", block:"start"});
+  return false;
+}
+
+function setupScrollSpy(){
+  if(observer) observer.disconnect();
+  const sections = document.querySelectorAll(".yr-section");
+  if(sections.length === 0) return;
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const year = entry.target.id.replace("y-", "");
+      const li = document.querySelector(`.timeline-list li[data-year="${year}"]`);
+      if(!li) return;
+      if(entry.isIntersecting) li.classList.add("active");
+      else li.classList.remove("active");
+    });
+  }, { rootMargin: "-90px 0px -70% 0px", threshold: 0 });
+  sections.forEach(s => observer.observe(s));
+}
+
+renderList();
+</script>
+</body>
+</html>
