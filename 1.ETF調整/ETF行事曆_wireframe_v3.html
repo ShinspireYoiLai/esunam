@@ -39,6 +39,11 @@ button{font-family:inherit;cursor:pointer}
 .demo-bar{background:#FFF7EF;border-bottom:1px solid #F1DCC5;color:var(--amber);
   font-size:12.5px;text-align:center;padding:5px 12px}
 
+.review-bar{background:var(--green-tint);border-bottom:1px solid #CFEAE8;color:var(--teal-dark);
+  font-size:13px;padding:14px 0;line-height:1.9}
+.review-bar b{display:block;font-size:14px;margin-bottom:4px}
+.review-bar ul{list-style:disc;padding-left:20px}
+
 /* ===== Header（既有，沿用全站樣式） ===== */
 header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
 .hd{display:flex;align-items:center;gap:26px;height:60px}
@@ -177,6 +182,16 @@ footer p{font-size:11.5px;color:#AEB6BD;margin-top:14px;line-height:1.7}
 </style>
 </head>
 <body>
+
+<div class="review-bar">
+  <div class="wrap">
+    <b>本次為 Wireframe 版本審閱，請聚焦以下重點：</b>
+    <ul>
+      <li>請協助確認資訊架構、頁面配置及功能流程是否符合需求與使用情境。</li>
+      <li>目前文字內容僅為示意用途，非最終文案，可暫時忽略文字細節。</li>
+    </ul>
+  </div>
+</div>
 
 <div class="demo-bar"><b>Wireframe</b>｜ETF行事曆頁面線框示意，灰色虛線區塊為既有內容佔位，日期與事件僅供示意，非最終視覺樣式</div>
 
