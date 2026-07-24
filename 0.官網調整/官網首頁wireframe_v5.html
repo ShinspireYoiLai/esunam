@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>玉山投信官網｜前台首頁 Wireframe（V14 移除最新消息NEW文字標籤）</title>
+<title>玉山投信官網｜前台首頁 Wireframe（V15 影音專區文字更新／依投資目的推薦基金改名投資方法／新增審閱提示）</title>
 <style>
 :root{
   --green:#00A19B;        /* 玉山綠（強調色，僅用於重點） */
@@ -23,6 +23,13 @@ body{font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",sans-serif;
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer}
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* ===== 審閱提示（頁面最上方） ===== */
+.review-banner{background:var(--green-tint);border-bottom:1px solid var(--green)}
+.review-banner .wrap{padding:14px 20px}
+.review-banner .rb-title{font-size:14px;font-weight:800;color:var(--green-dark);margin-bottom:6px}
+.review-banner ul{padding-left:20px;margin:0}
+.review-banner li{font-size:13px;color:var(--green-dark);line-height:1.7}
 
 /* wireframe 佔位樣式 */
 .ph{background:var(--ph);border:1px dashed var(--ph-line);border-radius:8px;
@@ -258,6 +265,17 @@ footer p{font-size:11.5px;color:#AEB6BD;margin-top:14px;line-height:1.7}
 </head>
 <body>
 
+<!-- 審閱提示（頁面最上方） -->
+<div class="review-banner">
+  <div class="wrap">
+    <p class="rb-title">本次為 Wireframe 版本審閱，請聚焦以下重點：</p>
+    <ul>
+      <li>請協助確認資訊架構、頁面配置及功能流程是否符合需求與使用情境。</li>
+      <li>目前文字內容僅為示意用途，非最終文案，可暫時忽略文字細節。</li>
+    </ul>
+  </div>
+</div>
+
 <!-- Header -->
 <header>
   <div class="wrap hd">
@@ -367,9 +385,9 @@ footer p{font-size:11.5px;color:#AEB6BD;margin-top:14px;line-height:1.7}
       <div class="ic-col">
         <h2 class="ic-col-ttl">影音專區<span class="chg-tag">最新消息→影音專區</span></h2>
         <div class="ic-thumb ph">封面圖片佔位（後台維護）</div>
-        <div class="ic-title">玉山美元嚴選非投資等級債券ETF基金(本基金之配息來源可能為收益平準金)收益分配評價結果公告</div>
+        <div class="ic-title">【季度領航觀點】在AI當道、股市高檔的環境下，投資該如何布局？</div>
         <div class="ic-date">2026/07/14</div>
-        <div class="ic-desc">公告玉山美元嚴選非投資等級債券ETF證券投資信託基金(本基金之配息來源可能為收益平準金)115年06月30日收益分配決定做成日每受益權單位實際配發金額為新臺幣0.1…</div>
+        <div class="ic-desc">今年以來，美台股市在企業獲利上修及AI高速發展帶動下，屢創新高紀錄，不過美科技股及台股短線漲幅較高，易受經濟數據、消息面等因素影響，震盪加劇…</div>
         <a class="ic-more" href="#">了解更多 ›</a>
       </div>
     </div>
@@ -379,13 +397,13 @@ footer p{font-size:11.5px;color:#AEB6BD;margin-top:14px;line-height:1.7}
 <!-- ⑥ 依投資目的推薦（色塊標籤＋置中ICON＋說明文字＋按鈕） -->
 <section class="blk">
   <div class="wrap">
-    <div class="blk-hd"><h2>依投資目的推薦基金<span class="chg-tag">版型調整</span></h2></div>
+    <div class="blk-hd"><h2>投資方法<span class="chg-tag">版型調整</span></h2></div>
     <div class="goal-wrap">
       <button class="car-arrow prev" onclick="goalScroll(-1)" aria-label="上一個">‹</button>
       <div class="goal-grid" id="goalGrid">
       <div class="goal-card">
         <span class="goal-tag c1">退休規劃</span>
-        <div class="goal-title">穩健累積退休金</div>
+        <div class="goal-title">戰略配 輕鬆投</div>
         <div class="goal-icon">icon</div>
         <div class="goal-desc">善用時間、投資基金，賺基本面長期複利的機會，透過月配息／平衡型精選建構「資產＋長樂」的目標。</div>
         <a class="goal-btn outline" href="#">了解更多</a>
