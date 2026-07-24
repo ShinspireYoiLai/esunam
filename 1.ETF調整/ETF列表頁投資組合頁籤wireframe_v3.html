@@ -29,6 +29,15 @@ button{font-family:inherit;cursor:pointer}
   display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:13px}
 .new-tag{display:inline-block;background:var(--amber);color:#fff;font-size:11px;font-weight:700;
   padding:1px 9px;border-radius:999px;vertical-align:2px;margin-left:8px;letter-spacing:1px}
+
+/* 頁面最上方審閱提示（配色改為品牌薄荷綠色調） */
+.review-notice{background:var(--green-tint);border-bottom:1px solid #BEE4E1;padding:14px 20px}
+.review-notice .rn-inner{max-width:1120px;margin:0 auto}
+.review-notice .rn-title{font-weight:700;color:var(--green-dark);font-size:13.5px;margin-bottom:6px}
+.review-notice .rn-list{padding-left:20px;color:var(--green-dark);font-size:12.5px;line-height:1.7}
+.review-notice .rn-list li{margin-bottom:2px}
+.review-notice .rn-list li::marker{color:var(--green-dark)}
+
 header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
 .hd{display:flex;align-items:center;gap:26px;height:60px}
 .logo{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:800;color:var(--green);white-space:nowrap}
@@ -127,6 +136,15 @@ footer p{font-size:11.5px;color:#AEB6BD;margin-top:14px;line-height:1.7}
 </style>
 </head>
 <body>
+<div class="review-notice">
+  <div class="rn-inner">
+    <div class="rn-title">本次為 Wireframe 版本審閱，請聚焦以下重點：</div>
+    <ul class="rn-list">
+      <li>請協助確認資訊架構、頁面配置及功能流程是否符合需求與使用情境。</li>
+      <li>目前文字內容僅為示意用途，非最終文案，可暫時忽略文字細節。</li>
+    </ul>
+  </div>
+</div>
 <header>
   <div class="wrap hd">
     <a class="logo" href="#"><span class="mt"></span>玉山投信</a>
