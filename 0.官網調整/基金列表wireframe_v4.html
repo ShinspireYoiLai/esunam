@@ -25,8 +25,14 @@ button{font-family:inherit;cursor:pointer}
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 .new-tag{display:inline-block;background:var(--amber);color:#fff;font-size:11px;font-weight:700;
   padding:1px 9px;border-radius:999px;vertical-align:2px;margin-left:8px;letter-spacing:1px}
-.demo-bar{background:#FFF7EF;border-bottom:1px solid #F1DCC5;color:var(--amber);
-  font-size:12.5px;text-align:center;padding:5px 12px}
+
+/* 審閱提示列 */
+.review-notice{background:var(--green-tint);border-bottom:1px solid #CBE9E7;
+  font-size:12.5px;text-align:left;padding:14px 0}
+.review-notice .rn-title{font-weight:700;margin-bottom:6px;color:var(--green-dark);font-size:13.5px}
+.review-notice ul{list-style:none}
+.review-notice li{position:relative;padding-left:14px;line-height:1.7;color:var(--green-dark)}
+.review-notice li::before{content:"•";position:absolute;left:0;color:var(--green-dark)}
 
 /* Header */
 header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
@@ -103,16 +109,12 @@ h1{font-size:24px;font-weight:800;padding:2px 0 14px}
 .f-actions .cnt{margin-left:auto;font-size:13px;color:var(--gray)}
 .f-actions .cnt b{color:var(--green-dark);font-size:15px}
 
-/* 結果頁籤（原三頁籤，移除總覽） */
+/* 結果頁籤 */
 .rtabs{display:flex;align-items:center;gap:4px;border-bottom:2px solid var(--line);flex-wrap:wrap}
 .rtab{border:none;background:transparent;color:var(--gray);font-size:14.5px;font-weight:700;
   padding:11px 26px;border-bottom:3px solid transparent;margin-bottom:-2px}
 .rtab:hover{color:var(--green)}
 .rtab.active{color:var(--green-dark);border-bottom-color:var(--green)}
-.rtab.removed{color:#C4CBD1;text-decoration:line-through;cursor:not-allowed;
-  border:1px dashed var(--ph-line);border-radius:8px 8px 0 0;margin-right:6px;padding:9px 22px}
-.rm-note{font-size:11px;font-weight:700;color:var(--amber);background:#FFF4EA;
-  border:1px solid #F1DCC5;border-radius:999px;padding:1px 10px;margin-left:-2px;margin-right:10px}
 
 /* 表格 */
 .tbl-card{background:#fff;border:1px solid var(--line);border-top:none;border-radius:0 0 12px 12px;overflow-x:auto}
@@ -147,6 +149,16 @@ footer p{font-size:11.5px;color:#AEB6BD;line-height:1.7}
 </style>
 </head>
 <body>
+
+<div class="review-notice">
+  <div class="wrap">
+    <p class="rn-title">本次為 Wireframe 版本審閱，請聚焦以下重點：</p>
+    <ul>
+      <li>請協助確認資訊架構、頁面配置及功能流程是否符合需求與使用情境。</li>
+      <li>目前文字內容僅為示意用途，非最終文案，可暫時忽略文字細節。</li>
+    </ul>
+  </div>
+</div>
 
 <header>
   <div class="wrap hd">
@@ -211,7 +223,7 @@ footer p{font-size:11.5px;color:#AEB6BD;line-height:1.7}
 
 <script>
 /* ===== 篩選群組定義（選項由後台／資料維護，示意）=====
-   排序需求(2)：依產業別／基金類型／投資區域／計價幣別／風險等級／配息方式 */
+   排序：依產業別／基金類型／投資區域／計價幣別／風險等級／配息方式 */
 const FILTERS = [
   { key:"ind", label:"依產業別", isNew:true, multiField:true,
     opts:["科技","半導體","AI 人工智慧","金融","醫療生技","基礎建設","能源資源","ESG 永續","不動產 REITs"] },
@@ -276,7 +288,7 @@ let view="nav";
 const picked = {};
 FILTERS.forEach(f=>picked[f.key]=new Set());
 
-/* 篩選群組收合狀態：初次進入預設收合，僅顯示輸入框及前兩項篩選群組(1) */
+/* 篩選群組收合狀態：初次進入預設收合，僅顯示輸入框及前兩項篩選群組 */
 let groupsExpanded = false;
 
 /* ===== 快速搜尋 autocomplete（名稱／代號） ===== */
@@ -337,7 +349,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ===== 篩選群組渲染 =====
-   需求(1)：初次進入預設收合，僅顯示輸入框及前兩項篩選值（依產業別／基金類型），
+   初次進入預設收合，僅顯示輸入框及前兩項篩選值（依產業別／基金類型），
    其餘群組（投資區域／計價幣別／風險等級／配息方式）收合於「展開更多篩選條件」之後 */
 function renderGroups(){
   const visible = groupsExpanded ? FILTERS : FILTERS.slice(0,2);
